@@ -189,12 +189,92 @@
   .search-box{ position: relative; }
   .search-box input{
     width:100%; background: var(--surface-2); border:1px solid var(--border);
-    border-radius: 8px; padding: 8px 12px 8px 34px; color: var(--text);
+    border-radius: 8px; padding: 8px 42px 8px 34px; color: var(--text);
     font-family: var(--sans); font-size: 0.8438rem; outline:none; transition: border-color .15s, box-shadow .15s;
   }
   .search-box input:focus{ border-color: var(--text-dim); box-shadow: 0 0 0 3px rgba(0,0,0,0.05); }
   [data-theme="dark"] .search-box input:focus{ box-shadow: 0 0 0 3px rgba(255,255,255,0.06); }
   .search-box svg{ position:absolute; left:11px; top:50%; transform:translateY(-50%); opacity:.5; pointer-events:none; }
+
+  .search-shortcut-hint {
+    position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+    font-size: 0.625rem; font-family: var(--mono); color: var(--text-faint);
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 2px 5px; border-radius: 4px; pointer-events: none; opacity: 0.75;
+  }
+
+  .search-popup {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 360px;
+    max-width: calc(100vw - 32px);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.22), 0 2px 10px rgba(0,0,0,0.08);
+    z-index: 100;
+    overflow: hidden;
+    animation: popupFadeIn 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes popupFadeIn {
+    from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .search-popup.show { display: block; }
+
+  .search-popup-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px; border-bottom: 1px solid var(--border);
+    background: var(--surface-2); font-size: 0.75rem; font-weight: 600;
+    color: var(--text-dim);
+  }
+  .popup-count { font-size: 0.6875rem; color: var(--text-faint); font-family: var(--mono); }
+
+  .search-popup-results {
+    max-height: 290px; overflow-y: auto; padding: 6px;
+  }
+  .search-popup-item {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    padding: 9px 12px; border-radius: 8px; cursor: pointer;
+    transition: background 0.12s ease; margin-bottom: 2px;
+  }
+  .search-popup-item:hover, .search-popup-item.selected {
+    background: var(--surface-2);
+  }
+  .popup-item-main { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .popup-item-name {
+    font-family: var(--mono); font-size: 0.7812rem; font-weight: 700;
+    color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .popup-item-mod {
+    font-size: 0.6875rem; color: var(--text-faint); display: flex; align-items: center; gap: 4px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .popup-item-badge {
+    font-size: 0.625rem; font-family: var(--mono); padding: 2px 6px; border-radius: 4px;
+    background: rgba(0,0,0,0.06); color: var(--text-dim); flex-shrink: 0; font-weight: 600;
+  }
+  [data-theme="dark"] .popup-item-badge { background: rgba(255,255,255,0.08); }
+  .popup-item-badge.public { color: #10b981; background: rgba(16,185,129,0.12); }
+  .popup-item-badge.secret { color: #f59e0b; background: rgba(245,158,11,0.12); }
+
+  .search-popup-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 12px; border-top: 1px solid var(--border);
+    background: var(--surface-2); font-size: 0.6875rem; color: var(--text-faint);
+  }
+  .search-popup-footer kbd {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1px 4px; font-family: var(--mono); font-size: 0.625rem;
+  }
+
+  .var-card.glow-highlight {
+    outline: 2px solid var(--accent);
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    transition: outline 0.3s ease, box-shadow 0.3s ease;
+  }
 
   .nav-link{
     display:flex; align-items:center; gap:9px;
@@ -543,9 +623,24 @@
       <button class="hamburger" id="desktopMenuBtn" onclick="toggleSidebar()" aria-label="Menu" style="margin-right: auto; display: none;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
-      <div class="search-box">
+      <div class="search-box" id="searchBoxContainer">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input id="searchInput" type="text" placeholder="Filter variables…" oninput="filterVars(this.value)">
+        <input id="searchInput" type="text" placeholder="Filter & search variables…" onfocus="openSearchPopup()" oninput="handleSearchInput(this.value)">
+        <span class="search-shortcut-hint">⌘K</span>
+
+        <!-- SEARCH POPUP DROPDOWN -->
+        <div class="search-popup" id="searchPopup">
+          <div class="search-popup-header">
+            <span class="popup-title" id="popupHeaderTitle">Most Common Variables</span>
+            <span class="popup-count" id="searchPopupCount">8 Suggested</span>
+          </div>
+          <div class="search-popup-results" id="searchPopupResults"></div>
+          <div class="search-popup-footer">
+            <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+            <span><kbd>↵</kbd> select</span>
+            <span><kbd>esc</kbd> close</span>
+          </div>
+        </div>
       </div>
       <div class="toggles">
         <button class="toggle-btn" id="langBtn" onclick="toggleLang()">EN / বাং</button>
@@ -1208,6 +1303,169 @@ function doShareNative(){
     showToast(currentLang === 'bn' ? 'শেয়ার সাপোর্ট নেই — লিংক কপি হয়েছে' : 'Sharing not supported — link copied instead');
   }
 }
+
+/* ---------------- SEARCH POPUP & COMMON RESULTS ---------------- */
+const COMMON_VARS = [
+  "NEXT_PUBLIC_SITE_URL",
+  "DATABASE_URL",
+  "RESEND_API_KEY",
+  "NEXT_PUBLIC_POSTHOG_KEY",
+  "NEXTAUTH_SECRET",
+  "SANITY_PROJECT_ID",
+  "NEXT_PUBLIC_GISCUS_REPO_ID",
+  "NEXT_PUBLIC_MAINTENANCE_MODE"
+];
+
+function getVarDetails(name) {
+  for (const mod of DATA) {
+    const v = mod.vars.find(item => item.name === name);
+    if (v) return { ...v, modId: mod.id, modTitle: mod.title, modIcon: mod.icon };
+  }
+  return null;
+}
+
+function openSearchPopup() {
+  const popup = document.getElementById('searchPopup');
+  if (popup) popup.classList.add('show');
+  const query = document.getElementById('searchInput').value.trim();
+  renderSearchPopupResults(query);
+}
+
+function closeSearchPopup() {
+  const popup = document.getElementById('searchPopup');
+  if (popup) popup.classList.remove('show');
+}
+
+function handleSearchInput(val) {
+  filterVars(val);
+  const popup = document.getElementById('searchPopup');
+  if (popup) popup.classList.add('show');
+  renderSearchPopupResults(val);
+}
+
+function renderSearchPopupResults(q) {
+  const container = document.getElementById('searchPopupResults');
+  const titleEl = document.getElementById('popupHeaderTitle');
+  const countEl = document.getElementById('searchPopupCount');
+  if (!container || !titleEl || !countEl) return;
+  
+  container.innerHTML = '';
+  q = q.toLowerCase().trim();
+
+  let items = [];
+
+  if (!q) {
+    titleEl.textContent = currentLang === 'bn' ? 'সবচেয়ে জনপ্রিয় ভ্যারিয়েবল' : 'Most Common Variables';
+    COMMON_VARS.forEach(name => {
+      const details = getVarDetails(name);
+      if (details) items.push(details);
+    });
+    countEl.textContent = `${items.length} ${currentLang === 'bn' ? 'পরামর্শ' : 'Suggested'}`;
+  } else {
+    titleEl.textContent = currentLang === 'bn' ? 'সার্চ ফলাফল' : 'Search Results';
+    DATA.forEach(mod => {
+      mod.vars.forEach(v => {
+        if (v.name.toLowerCase().includes(q) || mod.title.en.toLowerCase().includes(q) || (v.purpose && v.purpose.en && v.purpose.en.toLowerCase().includes(q))) {
+          items.push({ ...v, modId: mod.id, modTitle: mod.title, modIcon: mod.icon });
+        }
+      });
+    });
+    countEl.textContent = `${items.length} ${currentLang === 'bn' ? 'ফলাফল' : 'Found'}`;
+  }
+
+  if (items.length === 0) {
+    container.innerHTML = `<div style="padding: 16px; text-align: center; color: var(--text-faint); font-size: 0.8125rem;">
+      ${currentLang === 'bn' ? 'কোনো ভ্যারিয়েবল পাওয়া যায়নি' : 'No matching variables found'}
+    </div>`;
+    return;
+  }
+
+  items.forEach((item, index) => {
+    const el = document.createElement('div');
+    el.className = `search-popup-item ${index === 0 ? 'selected' : ''}`;
+    el.setAttribute('data-name', item.name);
+    el.onclick = () => selectPopupItem(item.name, item.modId);
+
+    const isPublic = item.type === 'public';
+    const typeLabel = isPublic ? 'PUBLIC' : 'SECRET';
+
+    el.innerHTML = `
+      <div class="popup-item-main">
+        <div class="popup-item-name">${item.name}</div>
+        <div class="popup-item-mod"><span>${item.modIcon}</span> <span>${item.modTitle[currentLang] || item.modTitle.en}</span></div>
+      </div>
+      <span class="popup-item-badge ${isPublic ? 'public' : 'secret'}">${typeLabel}</span>
+    `;
+
+    container.appendChild(el);
+  });
+}
+
+function selectPopupItem(varName, modId) {
+  closeSearchPopup();
+  location.hash = modId;
+  
+  setTimeout(() => {
+    const cards = document.querySelectorAll('.var-card');
+    cards.forEach(card => {
+      if (card.dataset.name === varName.toLowerCase()) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        card.classList.add('glow-highlight');
+        setTimeout(() => card.classList.remove('glow-highlight'), 2000);
+      }
+    });
+  }, 100);
+
+  copyText(varName);
+}
+
+// Global click & hotkey listeners for Search Popup
+document.addEventListener('click', (e) => {
+  const container = document.getElementById('searchBoxContainer');
+  if (container && !container.contains(e.target)) {
+    closeSearchPopup();
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+    e.preventDefault();
+    const input = document.getElementById('searchInput');
+    if (input) {
+      input.focus();
+      openSearchPopup();
+    }
+  } else if (e.key === 'Escape') {
+    closeSearchPopup();
+  } else {
+    const popup = document.getElementById('searchPopup');
+    if (popup && popup.classList.contains('show')) {
+      const items = popup.querySelectorAll('.search-popup-item');
+      if (!items.length) return;
+
+      let activeIndex = [...items].findIndex(item => item.classList.contains('selected'));
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (activeIndex >= 0) items[activeIndex].classList.remove('selected');
+        activeIndex = (activeIndex + 1) % items.length;
+        items[activeIndex].classList.add('selected');
+        items[activeIndex].scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (activeIndex >= 0) items[activeIndex].classList.remove('selected');
+        activeIndex = (activeIndex - 1 + items.length) % items.length;
+        items[activeIndex].classList.add('selected');
+        items[activeIndex].scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'Enter') {
+        if (activeIndex >= 0 && items[activeIndex]) {
+          e.preventDefault();
+          items[activeIndex].click();
+        }
+      }
+    }
+  }
+});
 
 function filterVars(q){
   q = q.toLowerCase().trim();
