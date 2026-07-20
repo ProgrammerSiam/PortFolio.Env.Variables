@@ -214,8 +214,7 @@
   .sidebar-foot a{ color: var(--text-dim); }
 
   /* ---------- Main ---------- */
-  main{ padding: 0 48px 120px; max-width: 1240px; width: 100%; margin: 0 auto; }
-  @media (max-width: 880px){ main{ padding: 0 20px 100px; } }
+  main{ padding: 0; width: 100%; min-width: 0; }
 
   .main-top-actions {
     position: sticky;
@@ -223,9 +222,10 @@
     z-index: 30;
     background: var(--bg);
     backdrop-filter: blur(12px);
-    padding: 0 48px;
-    margin: 0 -48px 32px;
+    padding: 0 32px;
+    margin: 0 0 32px 0;
     height: 64px;
+    width: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -234,10 +234,19 @@
     box-sizing: border-box;
   }
   @media (max-width: 880px){
-    .main-top-actions { margin: 0 -20px 24px; padding: 0 20px; }
+    .main-top-actions { padding: 0 16px; }
   }
   .main-top-actions .toggles { margin-bottom: 0; }
   .main-top-actions .search-box { margin-bottom: 0; min-width: 220px; flex: 1; max-width: 280px; }
+
+  .main-body {
+    max-width: 1240px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 48px 120px;
+    box-sizing: border-box;
+  }
+  @media (max-width: 880px){ .main-body{ padding: 0 20px 100px; } }
 
   .segmented-control {
     display: inline-flex;
@@ -563,80 +572,82 @@
       </div>
     </div>
 
-    <div class="hero">
-      <div class="eyebrow-pill">
-        <span class="pulse-dot"></span>
-        <span lang-content="en">Environment Reference</span>
-        <span lang-content="bn">এনভায়রনমেন্ট রেফারেন্স</span>
-      </div>
-      <h1>
-        <span lang-content="en">Every env variable your<br>portfolio actually needs.</span>
-        <span lang-content="bn">তোমার পোর্টফোলিওর জন্য<br>দরকারি সব env variable।</span>
-      </h1>
-      <p lang-content="en">A complete, plain-language reference for every environment variable used across this project — what it does, where it's used, and where to get the value. Copy what you need, skip what you don't.</p>
-      <p lang-content="bn">এই প্রজেক্টে ব্যবহৃত সব environment variable এর সহজ ভাষায় সম্পূর্ণ রেফারেন্স — কী কাজ করে, কোথায় ব্যবহার হয়, আর কোথা থেকে ভ্যালু পাওয়া যাবে। যা দরকার তা কপি করো, বাকিটা স্কিপ করো।</p>
+    <div class="main-body">
+      <div class="hero">
+        <div class="eyebrow-pill">
+          <span class="pulse-dot"></span>
+          <span lang-content="en">Environment Reference</span>
+          <span lang-content="bn">এনভায়রনমেন্ট রেফারেন্স</span>
+        </div>
+        <h1>
+          <span lang-content="en">Every env variable your<br>portfolio actually needs.</span>
+          <span lang-content="bn">তোমার পোর্টফোলিওর জন্য<br>দরকারি সব env variable।</span>
+        </h1>
+        <p lang-content="en">A complete, plain-language reference for every environment variable used across this project — what it does, where it's used, and where to get the value. Copy what you need, skip what you don't.</p>
+        <p lang-content="bn">এই প্রজেক্টে ব্যবহৃত সব environment variable এর সহজ ভাষায় সম্পূর্ণ রেফারেন্স — কী কাজ করে, কোথায় ব্যবহার হয়, আর কোথা থেকে ভ্যালু পাওয়া যাবে। যা দরকার তা কপি করো, বাকিটা স্কিপ করো।</p>
 
-      <div class="stat-row">
-        <div class="stat"><b id="statModules">0</b><span lang-content="en">Modules</span><span lang-content="bn">মডিউল</span></div>
-        <div class="stat"><b id="statVars">0</b><span lang-content="en">Variables</span><span lang-content="bn">ভ্যারিয়েবল</span></div>
-        <div class="stat"><b>MIT</b><span lang-content="en">License</span><span lang-content="bn">লাইসেন্স</span></div>
+        <div class="stat-row">
+          <div class="stat"><b id="statModules">0</b><span lang-content="en">Modules</span><span lang-content="bn">মডিউল</span></div>
+          <div class="stat"><b id="statVars">0</b><span lang-content="en">Variables</span><span lang-content="bn">ভ্যারিয়েবল</span></div>
+          <div class="stat"><b>MIT</b><span lang-content="en">License</span><span lang-content="bn">লাইসেন্স</span></div>
+        </div>
+
+        <div class="audience">
+          <div class="audience-card">
+            <span class="ic">🆕</span>
+            <h4><span lang-content="en">New to the project</span><span lang-content="bn">প্রজেক্টে নতুন</span></h4>
+            <p lang-content="en">Understand each variable before copy-pasting .env.example.</p>
+            <p lang-content="bn">কপি-পেস্ট করার আগে প্রতিটা ভ্যারিয়েবল বুঝে নাও।</p>
+          </div>
+          <div class="audience-card">
+            <span class="ic">🛠️</span>
+            <h4><span lang-content="en">First local setup</span><span lang-content="bn">প্রথম লোকাল সেটআপ</span></h4>
+            <p lang-content="en">Know exactly which service to sign up for, and where to grab the key.</p>
+            <p lang-content="bn">কোন সার্ভিসে সাইন আপ করতে হবে, কোথা থেকে key নিতে হবে জানো।</p>
+          </div>
+          <div class="audience-card">
+            <span class="ic">🚀</span>
+            <h4><span lang-content="en">Deploying to prod</span><span lang-content="bn">প্রোডাকশনে ডিপ্লয়</span></h4>
+            <p lang-content="en">Confirm nothing's missing before the build fails on your host.</p>
+            <p lang-content="bn">Build fail হওয়ার আগেই কিছু মিসিং কিনা কনফার্ম করো।</p>
+          </div>
+          <div class="audience-card">
+            <span class="ic">🤝</span>
+            <h4><span lang-content="en">Contributing a PR</span><span lang-content="bn">PR কন্ট্রিবিউট</span></h4>
+            <p lang-content="en">Follow the same documentation pattern for a new integration.</p>
+            <p lang-content="bn">নতুন ইন্টিগ্রেশনের জন্য একই ডকুমেন্টেশন প্যাটার্ন ফলো করো।</p>
+          </div>
+        </div>
+
+        <div class="callout">
+          <span lang-content="en"><b>No prior tool experience needed.</b> Written for a beginner-to-intermediate Next.js developer — every entry explains why the variable exists in plain language.</span>
+          <span lang-content="bn"><b>কোনো টুলে আগে থেকে অভিজ্ঞতা লাগবে না।</b> Beginner থেকে intermediate Next.js ডেভেলপারের জন্য লেখা — প্রতিটা এন্ট্রি সহজ ভাষায় বোঝায় কেন ভ্যারিয়েবলটা দরকার।</span>
+        </div>
       </div>
 
-      <div class="audience">
-        <div class="audience-card">
-          <span class="ic">🆕</span>
-          <h4><span lang-content="en">New to the project</span><span lang-content="bn">প্রজেক্টে নতুন</span></h4>
-          <p lang-content="en">Understand each variable before copy-pasting .env.example.</p>
-          <p lang-content="bn">কপি-পেস্ট করার আগে প্রতিটা ভ্যারিয়েবল বুঝে নাও।</p>
+      <div id="sections"></div>
+
+      <div class="final-env" id="finalEnvBlock">
+        <div class="final-env-head">
+          <div>
+            <h3>.env.example</h3>
+            <p lang-content="en">Every variable above, in one file. Copy into .env.local and fill in the blanks.</p>
+            <p lang-content="bn">উপরের সব ভ্যারিয়েবল একসাথে। .env.local এ কপি করে ভ্যালু বসাও।</p>
+          </div>
+          <button class="big-copy" onclick="copyFullEnv()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span lang-content="en">Copy all</span>
+            <span lang-content="bn">সব কপি করো</span>
+          </button>
         </div>
-        <div class="audience-card">
-          <span class="ic">🛠️</span>
-          <h4><span lang-content="en">First local setup</span><span lang-content="bn">প্রথম লোকাল সেটআপ</span></h4>
-          <p lang-content="en">Know exactly which service to sign up for, and where to grab the key.</p>
-          <p lang-content="bn">কোন সার্ভিসে সাইন আপ করতে হবে, কোথা থেকে key নিতে হবে জানো।</p>
-        </div>
-        <div class="audience-card">
-          <span class="ic">🚀</span>
-          <h4><span lang-content="en">Deploying to prod</span><span lang-content="bn">প্রোডাকশনে ডিপ্লয়</span></h4>
-          <p lang-content="en">Confirm nothing's missing before the build fails on your host.</p>
-          <p lang-content="bn">Build fail হওয়ার আগেই কিছু মিসিং কিনা কনফার্ম করো।</p>
-        </div>
-        <div class="audience-card">
-          <span class="ic">🤝</span>
-          <h4><span lang-content="en">Contributing a PR</span><span lang-content="bn">PR কন্ট্রিবিউট</span></h4>
-          <p lang-content="en">Follow the same documentation pattern for a new integration.</p>
-          <p lang-content="bn">নতুন ইন্টিগ্রেশনের জন্য একই ডকুমেন্টেশন প্যাটার্ন ফলো করো।</p>
-        </div>
+        <pre id="fullEnvPre"></pre>
       </div>
 
-      <div class="callout">
-        <span lang-content="en"><b>No prior tool experience needed.</b> Written for a beginner-to-intermediate Next.js developer — every entry explains why the variable exists in plain language.</span>
-        <span lang-content="bn"><b>কোনো টুলে আগে থেকে অভিজ্ঞতা লাগবে না।</b> Beginner থেকে intermediate Next.js ডেভেলপারের জন্য লেখা — প্রতিটা এন্ট্রি সহজ ভাষায় বোঝায় কেন ভ্যারিয়েবলটা দরকার।</span>
-      </div>
+      <footer>
+        <span>PortFolio.Env.Variables — MIT License</span>
+        <span>© 2026 ProgrammerSiam</span>
+      </footer>
     </div>
-
-    <div id="sections"></div>
-
-    <div class="final-env" id="finalEnvBlock">
-      <div class="final-env-head">
-        <div>
-          <h3>.env.example</h3>
-          <p lang-content="en">Every variable above, in one file. Copy into .env.local and fill in the blanks.</p>
-          <p lang-content="bn">উপরের সব ভ্যারিয়েবল একসাথে। .env.local এ কপি করে ভ্যালু বসাও।</p>
-        </div>
-        <button class="big-copy" onclick="copyFullEnv()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          <span lang-content="en">Copy all</span>
-          <span lang-content="bn">সব কপি করো</span>
-        </button>
-      </div>
-      <pre id="fullEnvPre"></pre>
-    </div>
-
-    <footer>
-      <span>PortFolio.Env.Variables — MIT License</span>
-      <span>© 2026 ProgrammerSiam</span>
-    </footer>
 
   </main>
 </div>
