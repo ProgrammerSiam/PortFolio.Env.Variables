@@ -2,6 +2,29 @@
 
 This document describes every environment variable used in this project, grouped by module. Each entry includes the variable's **purpose**, **where it's used**, and **where to get the value**.
 
+## What This File Covers
+
+- GitHub integration (contribution graph, API access)
+- DMCA protection badge
+- Analytics (PostHog, OpenPanel, Google Analytics, Umami, Vercel Analytics)
+- Bot protection / anti-spam (reCAPTCHA, hCaptcha)
+- SEO & site verification (Google, Bing, canonical URL)
+- Social share / Open Graph
+- Contact form / transactional email
+- Coding stats widget (WakaTime)
+- Blog / CMS integration
+- Guestbook
+- Newsletter signup
+- Security & performance (rate limiting, cron protection, ISR revalidation, image domains)
+- Dynamic `robots.txt` & `sitemap.xml` setup
+
+## Who Should Use This
+
+- **Anyone setting up this project locally** — copy `.env.example` to `.env.local` and fill in the values described here.
+- **Anyone deploying this project** (Vercel, VPS, etc.) — use this as the checklist for which secrets/keys to configure in the hosting provider's environment settings.
+- **Contributors** — use this to understand what each integration does before touching related code.
+- **Future you** — as a reference when a module is added, removed, or a key rotates.
+
 ## Table of Contents
 
 - [GitHub Integration](#github-integration)
@@ -17,6 +40,7 @@ This document describes every environment variable used in this project, grouped
 - [Blog / CMS](#blog--cms)
 - [Guestbook](#guestbook)
 - [Newsletter](#newsletter)
+- [Security & Performance](#security--performance)
 - [robots.txt & sitemap.xml](#robotstxt--sitemapxml)
 - [Full `.env.example`](#full-envexample)
 
@@ -301,6 +325,43 @@ RESEND_AUDIENCE_ID=
 
 ---
 
+## Security & Performance
+
+### `UPSTASH_REDIS_REST_URL`
+- **Purpose:** REST endpoint for an Upstash Redis instance.
+- **Used for:** Rate limiting the Contact Form and Newsletter signup endpoints to prevent spam/abuse.
+- **Used in:** Middleware or API route wrapping form submission handlers.
+
+### `UPSTASH_REDIS_REST_TOKEN`
+- **Purpose:** Auth token for the Upstash Redis REST API.
+- **Used for:** Authenticating rate-limit read/write calls.
+- **Used in:** Same rate-limiting logic as above.
+
+### `CRON_SECRET`
+- **Purpose:** Shared secret that verifies scheduled/cron requests are legitimate.
+- **Used for:** Protecting a cron endpoint (e.g. periodically refreshing GitHub contribution data) from being triggered by anyone who finds the URL.
+- **Used in:** The cron API route, checked against the `Authorization` header.
+
+### `REVALIDATE_SECRET`
+- **Purpose:** Secret that authorizes manual ISR (Incremental Static Regeneration) triggers.
+- **Used for:** Instantly refreshing a page's static content when a new blog post is published in the CMS.
+- **Used in:** `/api/revalidate` route, called by a CMS webhook on publish.
+
+### `NEXT_PUBLIC_IMAGE_DOMAINS`
+- **Purpose:** Comma-separated list of external domains allowed for `next/image` optimization.
+- **Used for:** Whitelisting image sources like the CMS, GitHub avatars, or OG image API.
+- **Used in:** `next.config.js` → `images.remotePatterns` / `images.domains`.
+
+```env
+UPSTASH_REDIS_REST_URL=
+UPSTASH_REDIS_REST_TOKEN=
+CRON_SECRET=
+REVALIDATE_SECRET=
+NEXT_PUBLIC_IMAGE_DOMAINS=
+```
+
+---
+
 ## robots.txt & sitemap.xml
 
 A static `public/robots.txt` applies the same rules to every environment. Using a dynamic `app/robots.ts` instead lets production and staging behave differently — so a staging deployment doesn't accidentally get indexed by Google.
@@ -393,6 +454,13 @@ DATABASE_URL=
 
 # Newsletter (reuses RESEND_API_KEY above)
 RESEND_AUDIENCE_ID=
+
+# Security & Performance
+UPSTASH_REDIS_REST_URL=
+UPSTASH_REDIS_REST_TOKEN=
+CRON_SECRET=
+REVALIDATE_SECRET=
+NEXT_PUBLIC_IMAGE_DOMAINS=
 
 # Environment
 NEXT_PUBLIC_ENV=
