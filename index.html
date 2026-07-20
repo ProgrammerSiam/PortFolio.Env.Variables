@@ -1085,9 +1085,7 @@ function toggleSidebar(){
   }
 }
 function closeSidebar(){
-  if (window.innerWidth > 880) {
-    document.querySelector('.shell').classList.add('sidebar-collapsed');
-  } else {
+  if (window.innerWidth <= 880) {
     document.getElementById('sidebar').classList.remove('open');
     document.getElementById('sidebarOverlay').classList.remove('show');
     document.body.style.overflow = '';
