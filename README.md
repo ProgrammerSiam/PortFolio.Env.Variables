@@ -12,6 +12,11 @@ This document describes every environment variable used in this project, grouped
 - [SEO / Site Verification](#seo--site-verification)
 - [Additional Analytics Options](#additional-analytics-options)
 - [Social Share / Open Graph](#social-share--open-graph)
+- [Contact Form / Email](#contact-form--email)
+- [WakaTime (Coding Stats)](#wakatime-coding-stats)
+- [Blog / CMS](#blog--cms)
+- [Guestbook](#guestbook)
+- [Newsletter](#newsletter)
 - [robots.txt & sitemap.xml](#robotstxt--sitemapxml)
 - [Full `.env.example`](#full-envexample)
 
@@ -202,6 +207,100 @@ NEXT_PUBLIC_TWITTER_HANDLE=
 
 ---
 
+## Contact Form / Email
+
+### `RESEND_API_KEY`
+- **Purpose:** API key for Resend, used to send transactional email.
+- **Used for:** Delivering messages submitted through the "Contact Me" form.
+- **Used in:** API route that handles the contact form submission (e.g. `/api/contact`).
+- **Get it from:** Resend dashboard → API Keys.
+
+### `EMAIL_TO`
+- **Purpose:** The email address that receives contact-form submissions.
+- **Used for:** Routing incoming messages to your inbox.
+- **Used in:** Same contact-form API route, as the recipient address.
+
+### `EMAIL_FROM`
+- **Purpose:** The "From" address shown to the sender/service.
+- **Used for:** Sending the contact-form confirmation or notification email.
+- **Used in:** Resend send call in the contact-form API route.
+
+```env
+RESEND_API_KEY=
+EMAIL_TO=
+EMAIL_FROM=
+```
+
+---
+
+## WakaTime (Coding Stats)
+
+### `WAKATIME_API_KEY`
+- **Purpose:** API key that authorizes requests to WakaTime.
+- **Used for:** Pulling your coding activity stats (hours coded, top languages) to show a "Coding Activity" widget.
+- **Used in:** Server-side fetch that feeds the stats widget, usually paired with the GitHub contribution graph.
+- **Get it from:** WakaTime → Settings → API Key.
+
+```env
+WAKATIME_API_KEY=
+```
+
+---
+
+## Blog / CMS
+
+### `CONTENTFUL_SPACE_ID`
+- **Purpose:** Identifies your Contentful space (or swap for Sanity/Notion/MDX equivalent).
+- **Used for:** Fetching blog posts/content for the blog section.
+- **Used in:** CMS client initialization, used by blog listing/detail pages.
+
+### `CONTENTFUL_ACCESS_TOKEN`
+- **Purpose:** Access token authorizing reads from the CMS.
+- **Used for:** Authenticating content fetches from Contentful's API.
+- **Used in:** Same CMS client as above.
+
+```env
+CONTENTFUL_SPACE_ID=
+CONTENTFUL_ACCESS_TOKEN=
+```
+
+> If you use a different CMS (Sanity, Notion API, or local MDX files), swap these two for that provider's equivalent credentials.
+
+---
+
+## Guestbook
+
+### `DATABASE_URL`
+- **Purpose:** Connection string to a Postgres/Supabase database.
+- **Used for:** Storing visitor guestbook entries (name, message, timestamp).
+- **Used in:** Guestbook API route (create/list entries) and its ORM client.
+
+```env
+DATABASE_URL=
+```
+
+> If a guestbook is the only feature needing a database, this can be the same `DATABASE_URL` already used elsewhere in the project — no need to duplicate it.
+
+---
+
+## Newsletter
+
+For a portfolio, the simplest and most maintainable option is **Resend Audiences** (Resend's built-in newsletter/broadcast feature) — since the contact form above already uses Resend, this avoids adding a second email provider. Alternatives like ConvertKit or Buttondown work too, but Resend keeps the stack to one API key.
+
+### `RESEND_AUDIENCE_ID`
+- **Purpose:** ID of the Resend Audience (subscriber list) that collects newsletter signups.
+- **Used for:** Adding new subscribers when someone submits the newsletter signup form.
+- **Used in:** API route for the newsletter signup form (e.g. `/api/newsletter/subscribe`).
+- **Get it from:** Resend dashboard → Audiences → create an audience, copy its ID.
+
+```env
+RESEND_AUDIENCE_ID=
+```
+
+> Reuses `RESEND_API_KEY` from the Contact Form section above — no separate API key needed.
+
+---
+
 ## robots.txt & sitemap.xml
 
 A static `public/robots.txt` applies the same rules to every environment. Using a dynamic `app/robots.ts` instead lets production and staging behave differently — so a staging deployment doesn't accidentally get indexed by Google.
@@ -276,6 +375,24 @@ NEXT_PUBLIC_VERCEL_ANALYTICS=
 # Social Share / Open Graph
 NEXT_PUBLIC_OG_IMAGE_API=
 NEXT_PUBLIC_TWITTER_HANDLE=
+
+# Contact Form / Email
+RESEND_API_KEY=
+EMAIL_TO=
+EMAIL_FROM=
+
+# WakaTime (Coding Stats)
+WAKATIME_API_KEY=
+
+# Blog / CMS
+CONTENTFUL_SPACE_ID=
+CONTENTFUL_ACCESS_TOKEN=
+
+# Guestbook
+DATABASE_URL=
+
+# Newsletter (reuses RESEND_API_KEY above)
+RESEND_AUDIENCE_ID=
 
 # Environment
 NEXT_PUBLIC_ENV=
