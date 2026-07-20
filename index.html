@@ -1541,24 +1541,24 @@ function copyFullEnv(){
   });
 }
 
-/* ---------------- SIDEBAR ---------------- */
 function toggleSidebar(){
-  if (window.innerWidth > 880) {
+  if (window.innerWidth > 1024) {
     document.querySelector('.shell').classList.toggle('sidebar-collapsed');
   } else {
     const sb = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebarOverlay');
+    if (!sb) return;
     const open = sb.classList.toggle('open');
-    overlay.classList.toggle('show', open);
+    if (overlay) overlay.classList.toggle('show', open);
     document.body.style.overflow = open ? 'hidden' : '';
   }
 }
 function closeSidebar(){
-  if (window.innerWidth <= 880) {
-    document.getElementById('sidebar').classList.remove('open');
-    document.getElementById('sidebarOverlay').classList.remove('show');
-    document.body.style.overflow = '';
-  }
+  const sb = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  if (sb) sb.classList.remove('open');
+  if (overlay) overlay.classList.remove('show');
+  document.body.style.overflow = '';
 }
 
 /* ---------------- TEXT SIZE ---------------- */
