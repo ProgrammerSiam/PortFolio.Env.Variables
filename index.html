@@ -882,7 +882,9 @@
       </div>
       <div class="toggles">
         <button class="toggle-btn" id="langBtn" onclick="toggleLang()">EN / বাং</button>
-        <button class="toggle-btn" id="themeBtn" onclick="toggleTheme()">☾ / ☀</button>
+        <button class="toggle-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle theme">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
       </div>
       <div class="segmented-control">
         <button class="toggle-btn" id="textSmallerBtn" onclick="changeTextSize(-1)" aria-label="Smaller text">A−</button>
@@ -1029,7 +1031,7 @@
 
     <div class="cmd-footer">
       <div class="cmd-footer-selected">
-        <span class="cmd-icon" id="cmdFooterIcon">🌐</span>
+        <span class="cmd-icon" id="cmdFooterIcon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
         <span id="cmdFooterText">Select a command or variable</span>
       </div>
       <div class="cmd-footer-hint">
@@ -1062,16 +1064,16 @@
 
       <div class="share-social-grid">
         <button class="social-share-btn" onclick="shareToTwitter()">
-          <span>𝕏</span> Twitter / X
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Twitter / X
         </button>
         <button class="social-share-btn" onclick="shareToLinkedIn()">
-          <span>💼</span> LinkedIn
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg> LinkedIn
         </button>
         <button class="social-share-btn" onclick="shareToWhatsApp()">
-          <span>💬</span> WhatsApp
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> WhatsApp
         </button>
         <button class="social-share-btn" onclick="shareToReddit()">
-          <span>🤖</span> Reddit
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.196-.491.94 0 1.702.762 1.702 1.702 0 .695-.418 1.295-1.015 1.565.018.2.028.402.028.605 0 3.097-3.64 5.61-8.125 5.61s-8.125-2.513-8.125-5.61c0-.203.01-.405.028-.605A1.7 1.7 0 0 1 2.72 12c0-.94.762-1.702 1.702-1.702.466 0 .888.182 1.196.49 1.194-.855 2.85-1.417 4.674-1.487l.951-4.456a.25.25 0 0 1 .292-.191l3.023.637a1.25 1.25 0 0 1 1.452-.547z"/></svg> Reddit
         </button>
       </div>
     </div>
@@ -1081,7 +1083,7 @@
 <script>
 /* ---------------- DATA ---------------- */
 const DATA = [
-  { id:"github", icon:"⚙️",
+  { id:"github", icon:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>`,
     title:{en:"GitHub Integration", bn:"GitHub ইন্টিগ্রেশন"},
     desc:{en:"Powers the contribution graph and authenticated GitHub API access.", bn:"Contribution graph এবং authenticated GitHub API access চালায়।"},
     vars:[
@@ -1094,7 +1096,7 @@ const DATA = [
         purpose:{en:"Third-party API (jogruber.de) returning contribution graph data.", bn:"Contribution graph ডেটা দেয় এমন থার্ড-পার্টি API (jogruber.de)।"},
         used:{en:"Fetch call powering the contribution heatmap.", bn:"Contribution heatmap চালানো fetch call।"}}
     ]},
-  { id:"dmca", icon:"🛡️",
+  { id:"dmca", icon:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
     title:{en:"DMCA", bn:"DMCA"},
     desc:{en:"Displays a DMCA protection badge for your content.", bn:"তোমার কন্টেন্টের জন্য DMCA protection badge দেখায়।"},
     vars:[
@@ -1102,7 +1104,7 @@ const DATA = [
         purpose:{en:"URL for the DMCA protection badge/link.", bn:"DMCA protection badge/লিংকের URL।"},
         used:{en:"Footer component.", bn:"Footer কম্পোনেন্ট।"}}
     ]},
-  { id:"posthog", icon:"📊",
+  { id:"posthog", icon:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>`,
     title:{en:"Analytics — PostHog", bn:"Analytics — PostHog"},
     desc:{en:"Product analytics for tracking visitor behavior.", bn:"ভিজিটর বিহেভিয়ার ট্র্যাক করার product analytics।"},
     vars:[
@@ -1117,7 +1119,7 @@ const DATA = [
         get:{en:"Your PostHog Cloud region URL", bn:"তোমার PostHog Cloud region URL"},
         url:"https://app.posthog.com/project/settings"}
     ]},
-  { id:"openpanel", icon:"📈",
+  { id:"openpanel", icon:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>`,
     title:{en:"Analytics — OpenPanel", bn:"Analytics — OpenPanel"},
     desc:{en:"Privacy-friendly analytics, client + server side.", bn:"প্রাইভেসি-ফ্রেন্ডলি analytics, client + server উভয় সাইড।"},
     vars:[
@@ -1142,7 +1144,7 @@ const DATA = [
         get:{en:"OpenPanel dashboard → API keys", bn:"OpenPanel dashboard → API keys"},
         url:"https://dashboard.openpanel.dev/"}
     ]},
-  { id:"bot", icon:"🤖",
+  { id:"bot", icon:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
     title:{en:"Bot Protection / Anti-Spam", bn:"Bot Protection / Anti-Spam"},
     desc:{en:"reCAPTCHA and hCaptcha for blocking spam submissions.", bn:"স্প্যাম সাবমিশন আটকাতে reCAPTCHA এবং hCaptcha।"},
     vars:[
@@ -1167,7 +1169,7 @@ const DATA = [
         get:{en:"hCaptcha dashboard → Sites", bn:"hCaptcha dashboard → Sites"},
         url:"https://dashboard.hcaptcha.com/"}
     ]},
-  { id:"seo", icon:"🔍",
+  { id:"seo", icon:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`,
     title:{en:"SEO / Site Verification", bn:"SEO / Site Verification"},
     desc:{en:"Search engine ownership verification and canonical URL.", bn:"সার্চ ইঞ্জিন ownership verification ও canonical URL।"},
     vars:[
@@ -1185,7 +1187,7 @@ const DATA = [
         purpose:{en:"Canonical base URL of the deployed site.", bn:"ডিপ্লয়কৃত সাইটের canonical base URL।"},
         used:{en:"sitemap.ts, robots.ts, metadata generation.", bn:"sitemap.ts, robots.ts, metadata generation।"}}
     ]},
-  { id:"analytics2", icon:"📉",
+  { id:"analytics2", icon:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`,
     title:{en:"Additional Analytics", bn:"আরও Analytics"},
     desc:{en:"Extra analytics providers — pick what you need.", bn:"অতিরিক্ত analytics প্রোভাইডার — যা দরকার বেছে নাও।"},
     vars:[
@@ -1203,7 +1205,7 @@ const DATA = [
         get:{en:"Vercel dashboard → Project → Analytics", bn:"Vercel dashboard → Project → Analytics"},
         url:"https://vercel.com/docs/analytics"}
     ]},
-  { id:"og", icon:"🔗",
+  { id:"og", icon:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`,
     title:{en:"Social Share / Open Graph", bn:"Social Share / Open Graph"},
     desc:{en:"Dynamic preview images and Twitter card metadata.", bn:"Dynamic preview ইমেজ ও Twitter card metadata।"},
     vars:[
@@ -1214,7 +1216,7 @@ const DATA = [
         purpose:{en:"Your Twitter/X handle.", bn:"তোমার Twitter/X হ্যান্ডেল।"},
         used:{en:"twitter:site / twitter:creator meta tags.", bn:"twitter:site / twitter:creator meta tag।"}}
     ]},
-  { id:"contact", icon:"✉️",
+  { id:"contact", icon:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>`,
     title:{en:"Contact Form / Email", bn:"Contact Form / Email"},
     desc:{en:"Transactional email for the contact form.", bn:"Contact form এর জন্য transactional email।"},
     vars:[
@@ -1230,7 +1232,7 @@ const DATA = [
         purpose:{en:"The \"From\" address shown to recipients.", bn:"রিসিপিয়েন্টকে দেখানো \"From\" অ্যাড্রেস।"},
         used:{en:"Resend send call.", bn:"Resend send call।"}}
     ]},
-  { id:"wakatime", icon:"⏱️",
+  { id:"wakatime", icon:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
     title:{en:"WakaTime", bn:"WakaTime"},
     desc:{en:"Coding activity stats widget.", bn:"কোডিং অ্যাক্টিভিটি স্ট্যাটস widget।"},
     vars:[
@@ -1240,7 +1242,7 @@ const DATA = [
         get:{en:"WakaTime → Settings → API Key", bn:"WakaTime → Settings → API Key"},
         url:"https://wakatime.com/settings/account"}
     ]},
-  { id:"cms", icon:"📝",
+  { id:"cms", icon:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`,
     title:{en:"Blog / CMS", bn:"Blog / CMS"},
     desc:{en:"Content management for the blog section.", bn:"Blog সেকশনের জন্য content management।"},
     vars:[
@@ -1255,7 +1257,7 @@ const DATA = [
         get:{en:"Contentful → Settings → API keys", bn:"Contentful → Settings → API keys"},
         url:"https://app.contentful.com/"}
     ]},
-  { id:"guestbook", icon:"💬",
+  { id:"guestbook", icon:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
     title:{en:"Guestbook", bn:"Guestbook"},
     desc:{en:"Stores visitor messages.", bn:"ভিজিটরদের মেসেজ সংরক্ষণ করে।"},
     vars:[
@@ -1265,7 +1267,7 @@ const DATA = [
         get:{en:"Supabase → Project settings → Database", bn:"Supabase → Project settings → Database"},
         url:"https://supabase.com/dashboard"}
     ]},
-  { id:"newsletter", icon:"📮",
+  { id:"newsletter", icon:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 13V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h9"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>`,
     title:{en:"Newsletter", bn:"Newsletter"},
     desc:{en:"Resend Audiences — reuses the same email provider as Contact Form.", bn:"Resend Audiences — Contact Form এর একই email provider reuse করে।"},
     vars:[
@@ -1275,7 +1277,7 @@ const DATA = [
         get:{en:"Resend dashboard → Audiences", bn:"Resend dashboard → Audiences"},
         url:"https://resend.com/audiences"}
     ]},
-  { id:"security", icon:"🔒",
+  { id:"security", icon:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
     title:{en:"Security & Performance", bn:"Security ও Performance"},
     desc:{en:"Rate limiting, cron protection, ISR revalidation, image domains.", bn:"Rate limiting, cron protection, ISR revalidation, image domains।"},
     vars:[
@@ -1299,7 +1301,7 @@ const DATA = [
         purpose:{en:"Allowed external domains for next/image.", bn:"next/image এর allowed external domain।"},
         used:{en:"next.config.js → images.remotePatterns.", bn:"next.config.js → images.remotePatterns।"}}
     ]},
-  { id:"gdpr", icon:"🍪",
+  { id:"gdpr", icon:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>`,
     title:{en:"Cookie Consent / GDPR", bn:"Cookie Consent / GDPR"},
     desc:{en:"Consent banner required before loading analytics for EU visitors.", bn:"EU ভিজিটরদের জন্য analytics লোডের আগে consent banner দরকার।"},
     vars:[
@@ -1309,7 +1311,7 @@ const DATA = [
         get:{en:"CookieYes dashboard → Websites", bn:"CookieYes dashboard → Websites"},
         url:"https://app.cookieyes.com/"}
     ]},
-  { id:"maintenance", icon:"🚧",
+  { id:"maintenance", icon:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
     title:{en:"Maintenance Mode", bn:"Maintenance Mode"},
     desc:{en:"Site-wide maintenance toggle.", bn:"সাইট-ওয়াইড maintenance টগল।"},
     vars:[
@@ -1317,7 +1319,7 @@ const DATA = [
         purpose:{en:"Boolean flag toggling maintenance mode.", bn:"Maintenance mode টগল করা boolean flag।"},
         used:{en:"Root layout / middleware.", bn:"Root layout / middleware।"}}
     ]},
-  { id:"resume", icon:"📄",
+  { id:"resume", icon:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`,
     title:{en:"Resume / CV", bn:"Resume / CV"},
     desc:{en:"Powers the download-resume button.", bn:"Download-resume বাটন চালায়।"},
     vars:[
@@ -1325,7 +1327,7 @@ const DATA = [
         purpose:{en:"Direct link to your resume file.", bn:"রিজিউমি ফাইলের direct link।"},
         used:{en:"Hero/About section download button.", bn:"Hero/About সেকশনের download বাটন।"}}
     ]},
-  { id:"env", icon:"🌐",
+  { id:"env", icon:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
     title:{en:"Environment", bn:"Environment"},
     desc:{en:"Deployment environment identifier.", bn:"ডিপ্লয়মেন্ট environment শনাক্তকারী।"},
     vars:[
@@ -1698,16 +1700,26 @@ function renderCmdResults(q) {
   let groups = [];
 
   if (!q) {
+    // SVG icon constants
+    const SVG_HOME = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`;
+    const SVG_MODS = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>`;
+    const SVG_COPY = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
+    const SVG_GH = `<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.1.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.9-1.29 2.74-1.02 2.74-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>`;
+    const SVG_THEME = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+    const SVG_LANG = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`;
+    const SVG_PUB = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`;
+    const SVG_SEC = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.778-7.778zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>`;
+
     // Menu Group
     groups.push({
       title: 'Menu',
       items: [
-        { icon: '💿', label: 'Home', sub: 'Scroll to top', kbd: 'GH', action: () => { window.scrollTo({top:0, behavior:'smooth'}); } },
-        { icon: '⚛️', label: 'Components & Modules', sub: 'Jump to reference', kbd: 'GC', action: () => { location.hash = 'github'; } },
-        { icon: '📋', label: 'Copy .env.example', sub: 'Full config template', kbd: 'GE', action: () => { copyFullEnv(); } },
-        { icon: '🐙', label: 'GitHub Repository', sub: 'Open source repo', kbd: 'GR', action: () => { doOpenGitHub(); } },
-        { icon: '🌓', label: 'Toggle Dark / Light Theme', sub: 'Switch theme mode', kbd: 'GT', action: () => { toggleTheme(); } },
-        { icon: '🌐', label: 'Toggle Language (EN / BN)', sub: 'Switch interface lang', kbd: 'GL', action: () => { toggleLang(); } }
+        { icon: SVG_HOME, label: 'Home', sub: 'Scroll to top', kbd: 'GH', action: () => { window.scrollTo({top:0, behavior:'smooth'}); } },
+        { icon: SVG_MODS, label: 'Components & Modules', sub: 'Jump to reference', kbd: 'GC', action: () => { location.hash = 'github'; } },
+        { icon: SVG_COPY, label: 'Copy .env.example', sub: 'Full config template', kbd: 'GE', action: () => { copyFullEnv(); } },
+        { icon: SVG_GH, label: 'GitHub Repository', sub: 'Open source repo', kbd: 'GR', action: () => { doOpenGitHub(); } },
+        { icon: SVG_THEME, label: 'Toggle Dark / Light Theme', sub: 'Switch theme mode', kbd: 'GT', action: () => { toggleTheme(); } },
+        { icon: SVG_LANG, label: 'Toggle Language (EN / BN)', sub: 'Switch interface lang', kbd: 'GL', action: () => { toggleLang(); } }
       ]
     });
 
@@ -1717,7 +1729,7 @@ function renderCmdResults(q) {
       const d = getVarDetails(name);
       if (d) {
         commonItems.push({
-          icon: d.type === 'public' ? '🌐' : '🔑',
+          icon: d.type === 'public' ? SVG_PUB : SVG_SEC,
           label: d.name,
           sub: d.modTitle.en,
           kbd: d.type === 'public' ? 'PUBLIC' : 'SECRET',
@@ -1738,13 +1750,21 @@ function renderCmdResults(q) {
     groups.push({ title: 'Portfolio Modules', items: modItems });
 
   } else {
+    const SVG_HOME = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`;
+    const SVG_COPY = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
+    const SVG_GH = `<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.1.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.9-1.29 2.74-1.02 2.74-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>`;
+    const SVG_THEME = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+    const SVG_LANG = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`;
+    const SVG_PUB = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`;
+    const SVG_SEC = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.778-7.778zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>`;
+
     // Filtered search
     const matchingMenu = [
-      { icon: '💿', label: 'Home', sub: 'Scroll to top', kbd: 'GH', action: () => { window.scrollTo({top:0, behavior:'smooth'}); } },
-      { icon: '📋', label: 'Copy .env.example', sub: 'Full config template', kbd: 'GE', action: () => { copyFullEnv(); } },
-      { icon: '🐙', label: 'GitHub Repository', sub: 'Open source repo', kbd: 'GR', action: () => { doOpenGitHub(); } },
-      { icon: '🌓', label: 'Toggle Theme', sub: 'Switch theme', kbd: 'GT', action: () => { toggleTheme(); } },
-      { icon: '🌐', label: 'Toggle Language', sub: 'Switch language', kbd: 'GL', action: () => { toggleLang(); } }
+      { icon: SVG_HOME, label: 'Home', sub: 'Scroll to top', kbd: 'GH', action: () => { window.scrollTo({top:0, behavior:'smooth'}); } },
+      { icon: SVG_COPY, label: 'Copy .env.example', sub: 'Full config template', kbd: 'GE', action: () => { copyFullEnv(); } },
+      { icon: SVG_GH, label: 'GitHub Repository', sub: 'Open source repo', kbd: 'GR', action: () => { doOpenGitHub(); } },
+      { icon: SVG_THEME, label: 'Toggle Theme', sub: 'Switch theme', kbd: 'GT', action: () => { toggleTheme(); } },
+      { icon: SVG_LANG, label: 'Toggle Language', sub: 'Switch language', kbd: 'GL', action: () => { toggleLang(); } }
     ].filter(i => i.label.toLowerCase().includes(q) || i.sub.toLowerCase().includes(q));
 
     if (matchingMenu.length) {
@@ -1756,7 +1776,7 @@ function renderCmdResults(q) {
       mod.vars.forEach(v => {
         if (v.name.toLowerCase().includes(q) || mod.title.en.toLowerCase().includes(q) || (v.purpose && v.purpose.en && v.purpose.en.toLowerCase().includes(q))) {
           matchingVars.push({
-            icon: v.type === 'public' ? '🌐' : '🔑',
+            icon: v.type === 'public' ? SVG_PUB : SVG_SEC,
             label: v.name,
             sub: mod.title.en,
             kbd: v.type === 'public' ? 'PUBLIC' : 'SECRET',
@@ -1825,7 +1845,7 @@ function updateCmdFooter(item) {
   const icon = document.getElementById('cmdFooterIcon');
   const text = document.getElementById('cmdFooterText');
   const hint = document.getElementById('cmdFooterHintText');
-  if (icon) icon.textContent = item.icon;
+  if (icon) icon.innerHTML = item.icon;
   if (text) text.textContent = item.label;
   if (hint) hint.textContent = item.kbd === 'PUBLIC' || item.kbd === 'SECRET' ? 'Copy variable' : 'Go to page';
 }
