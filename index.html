@@ -118,7 +118,7 @@
   .sidebar-overlay.show{ display:block; }
 
   @media (max-width: 880px){
-    .shell{ grid-template-columns: 1fr; }
+    .shell{ display: block; }
     .mobile-topbar{ display:flex; }
     .sidebar{
       position: fixed; top:0; left:0; height:100vh; width: 280px; max-width: 82vw;
@@ -572,7 +572,35 @@
     box-sizing: border-box;
   }
   @media (max-width: 880px){
-    .main-top-actions { padding: 0 16px; }
+    .main-top-actions {
+      position: sticky;
+      top: 57px;
+      z-index: 35;
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      padding: 10px 16px;
+      margin: 0 0 20px 0;
+      height: auto;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .main-top-actions .search-box {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      flex: 1 1 100%;
+      order: 1;
+      margin: 0;
+    }
+    .main-top-actions .toggles,
+    .main-top-actions .segmented-control,
+    .main-top-actions .action-btn-group {
+      order: 2;
+    }
   }
   .main-top-actions .toggles { margin-bottom: 0; }
   .main-top-actions .search-box { margin-bottom: 0; min-width: 220px; flex: 1; max-width: 280px; }
@@ -584,7 +612,7 @@
     padding: 0 48px 48px;
     box-sizing: border-box;
   }
-  @media (max-width: 880px){ .main-body{ padding: 0 20px 40px; } }
+  @media (max-width: 880px){ .main-body{ padding: 16px 20px 40px; } }
 
   .segmented-control {
     display: inline-flex;
@@ -613,9 +641,10 @@
     font-weight: 700;
   }
   
-  @media (max-width: 480px){
-    .main-top-actions { justify-content: flex-start; }
-    .main-top-actions .search-box { width: 100%; max-width: 100%; min-width: 0; }
+  @media (max-width: 520px){
+    .main-top-actions { padding: 8px 12px; gap: 8px; }
+    .main-top-actions .segmented-control .toggle-btn { padding: 4px 6px; font-size: 0.6875rem; }
+    .main-top-actions .split-btn { padding: 5px 8px; font-size: 0.75rem; }
   }
 
   .hero{ margin-bottom: 44px; }
