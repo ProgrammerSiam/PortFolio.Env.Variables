@@ -135,18 +135,18 @@
 
   .toggles{ display:flex; gap:6px; margin-bottom: 18px; }
   .toggle-btn{
-    flex:1;
     background: var(--surface-2);
     border:1px solid var(--border);
     color: var(--text-dim);
     font-family: var(--sans);
     font-size: 0.75rem;
     font-weight: 600;
-    padding: 7px 0;
+    padding: 7px 12px;
     border-radius: 7px;
     cursor:pointer;
     display:flex; align-items:center; justify-content:center; gap:5px;
     transition: all .12s;
+    white-space: nowrap;
   }
   .toggle-btn:hover{ color: var(--text); border-color: var(--text-faint); }
   .toggle-btn.active{ background: var(--accent); color: var(--accent-inv); border-color: var(--accent); }
@@ -180,6 +180,19 @@
   /* ---------- Main ---------- */
   main{ padding: 56px 48px 120px; max-width: 900px; }
   @media (max-width: 880px){ main{ padding: 36px 20px 100px; } }
+
+  .main-top-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+  }
+  .main-top-actions .toggles { margin-bottom: 0; }
+  @media (max-width: 480px){
+    .main-top-actions { justify-content: flex-start; }
+  }
 
   .hero{ margin-bottom: 44px; }
   .hero .eyebrow{
@@ -384,23 +397,6 @@
           PortFolio.Env.Variables
         </div>
       </div>
-      <div class="share-wrap">
-        <button class="share-btn" id="shareBtnDesktop" onclick="toggleShareMenu(event)" aria-label="Share this page">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>
-          <span lang-content="en">Share</span>
-          <span lang-content="bn">শেয়ার</span>
-        </button>
-      </div>
-    </div>
-
-    <div class="toggles">
-      <button class="toggle-btn" id="langBtn" onclick="toggleLang()">EN / বাং</button>
-      <button class="toggle-btn" id="themeBtn" onclick="toggleTheme()">☾ / ☀</button>
-    </div>
-    <div class="toggles">
-      <button class="toggle-btn" id="textSmallerBtn" onclick="changeTextSize(-1)" aria-label="Smaller text">A−</button>
-      <button class="toggle-btn" id="textResetBtn" onclick="changeTextSize(0)" aria-label="Reset text size">A</button>
-      <button class="toggle-btn" id="textLargerBtn" onclick="changeTextSize(1)" aria-label="Larger text">A+</button>
     </div>
 
     <div class="search-box">
@@ -419,6 +415,25 @@
 
   <!-- ============ MAIN ============ -->
   <main>
+
+    <div class="main-top-actions">
+      <div class="toggles">
+        <button class="toggle-btn" id="langBtn" onclick="toggleLang()">EN / বাং</button>
+        <button class="toggle-btn" id="themeBtn" onclick="toggleTheme()">☾ / ☀</button>
+      </div>
+      <div class="toggles">
+        <button class="toggle-btn" id="textSmallerBtn" onclick="changeTextSize(-1)" aria-label="Smaller text">A−</button>
+        <button class="toggle-btn" id="textResetBtn" onclick="changeTextSize(0)" aria-label="Reset text size">A</button>
+        <button class="toggle-btn" id="textLargerBtn" onclick="changeTextSize(1)" aria-label="Larger text">A+</button>
+      </div>
+      <div class="share-wrap">
+        <button class="share-btn" id="shareBtnDesktop" onclick="toggleShareMenu(event)" aria-label="Share this page">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>
+          <span lang-content="en">Share</span>
+          <span lang-content="bn">শেয়ার</span>
+        </button>
+      </div>
+    </div>
 
     <div class="hero">
       <div class="eyebrow">
