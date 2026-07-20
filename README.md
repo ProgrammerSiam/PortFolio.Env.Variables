@@ -16,6 +16,9 @@ This document describes every environment variable used in this project, grouped
 - Guestbook
 - Newsletter signup
 - Security & performance (rate limiting, cron protection, ISR revalidation, image domains)
+- Cookie consent / GDPR
+- Maintenance mode
+- Resume/CV download
 - Dynamic `robots.txt` & `sitemap.xml` setup
 
 ## Who Should Use This
@@ -24,6 +27,20 @@ This document describes every environment variable used in this project, grouped
 - **Anyone deploying this project** (Vercel, VPS, etc.) — use this as the checklist for which secrets/keys to configure in the hosting provider's environment settings.
 - **Contributors** — use this to understand what each integration does before touching related code.
 - **Future you** — as a reference when a module is added, removed, or a key rotates.
+
+### What Level of Knowledge Do You Need?
+
+You don't need to be an expert in every service listed here — this guide is written so a **beginner-to-intermediate Next.js developer** can follow it without prior experience with any specific provider (PostHog, Resend, Upstash, etc.). That said, it helps most if you:
+
+| If you are... | This guide helps you... |
+|---|---|
+| 🆕 **New to the project** | Understand what each variable does before blindly copy-pasting `.env.example` |
+| 🛠️ **Setting up locally for the first time** | Know exactly which service to sign up for and where to grab each key |
+| 🚀 **Deploying to production** | Confirm nothing is missing before the build fails on a hosting platform |
+| 🤝 **Contributing a PR** | Add a new integration following the same documentation pattern |
+| 🔁 **Rotating a leaked/expired key** | Quickly find which file/route uses that variable |
+
+> If a term here is unfamiliar (e.g. "ISR", "REST token"), each entry links its purpose in plain language — you don't need prior knowledge of the specific tool to understand *why* the variable exists.
 
 ## Table of Contents
 
@@ -41,6 +58,9 @@ This document describes every environment variable used in this project, grouped
 - [Guestbook](#guestbook)
 - [Newsletter](#newsletter)
 - [Security & Performance](#security--performance)
+- [Cookie Consent / GDPR](#cookie-consent--gdpr)
+- [Maintenance Mode](#maintenance-mode)
+- [Resume / CV](#resume--cv)
 - [robots.txt & sitemap.xml](#robotstxt--sitemapxml)
 - [Full `.env.example`](#full-envexample)
 
@@ -362,6 +382,45 @@ NEXT_PUBLIC_IMAGE_DOMAINS=
 
 ---
 
+## Cookie Consent / GDPR
+
+### `NEXT_PUBLIC_COOKIEYES_ID`
+- **Purpose:** ID for a cookie-consent provider (CookieYes, Cookiebot, or similar).
+- **Used for:** Showing a cookie consent banner and blocking analytics scripts (PostHog, GA, Umami) until the visitor consents — required for GDPR compliance with EU visitors.
+- **Used in:** Root layout, loaded before other analytics scripts.
+
+```env
+NEXT_PUBLIC_COOKIEYES_ID=
+```
+
+---
+
+## Maintenance Mode
+
+### `NEXT_PUBLIC_MAINTENANCE_MODE`
+- **Purpose:** Boolean flag to toggle site-wide maintenance mode.
+- **Used for:** Showing a "Site under maintenance" page instead of the normal site while you're making major changes.
+- **Used in:** Root layout or middleware, checked before rendering normal pages.
+
+```env
+NEXT_PUBLIC_MAINTENANCE_MODE=
+```
+
+---
+
+## Resume / CV
+
+### `NEXT_PUBLIC_RESUME_URL`
+- **Purpose:** Direct link to your resume/CV file (hosted on Google Drive, S3, or a CDN).
+- **Used for:** Powering the "Download Resume" button on the portfolio.
+- **Used in:** Hero/About section download button.
+
+```env
+NEXT_PUBLIC_RESUME_URL=
+```
+
+---
+
 ## robots.txt & sitemap.xml
 
 A static `public/robots.txt` applies the same rules to every environment. Using a dynamic `app/robots.ts` instead lets production and staging behave differently — so a staging deployment doesn't accidentally get indexed by Google.
@@ -461,6 +520,15 @@ UPSTASH_REDIS_REST_TOKEN=
 CRON_SECRET=
 REVALIDATE_SECRET=
 NEXT_PUBLIC_IMAGE_DOMAINS=
+
+# Cookie Consent / GDPR
+NEXT_PUBLIC_COOKIEYES_ID=
+
+# Maintenance Mode
+NEXT_PUBLIC_MAINTENANCE_MODE=
+
+# Resume / CV
+NEXT_PUBLIC_RESUME_URL=
 
 # Environment
 NEXT_PUBLIC_ENV=
