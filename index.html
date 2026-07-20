@@ -695,27 +695,124 @@
   }
   .callout b{ color: var(--text); }
 
-  /* ---------- Section ---------- */
-  .section{ margin-top: 60px; scroll-margin-top: 30px; }
-  .section-head{ display:flex; align-items:center; gap:12px; margin-bottom: 6px; }
-  .section-icon{
-    width: 34px; height:34px; border-radius: 9px; display:flex; align-items:center; justify-content:center;
-    font-size: 0.9375rem; flex-shrink:0; background: var(--surface-2); border:1px solid var(--border);
+  /* ---------- Section & Cards ---------- */
+  .section { margin-top: 56px; scroll-margin-top: 24px; }
+  .section-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .section-icon {
+    width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0; background: var(--surface-2); border: 1px solid var(--border);
+    color: var(--accent);
   }
-  .section-head h2{ font-size: 1.1875rem; margin:0; letter-spacing:-0.01em; }
-  .section-desc{ color: var(--text-dim); font-size: 0.8438rem; margin: 4px 0 20px 46px; max-width: 780px; }
+  .section-title-wrap { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .section-head h2 { font-size: 1.25rem; font-weight: 700; margin: 0; letter-spacing: -0.015em; }
+  .var-count-pill {
+    font-family: var(--mono); font-size: 0.6875rem; padding: 2px 8px; border-radius: 12px;
+    background: var(--surface-2); border: 1px solid var(--border); color: var(--text-dim);
+  }
+  .section-desc { color: var(--text-dim); font-size: 0.875rem; margin: 4px 0 24px 50px; max-width: 820px; line-height: 1.55; }
+  @media (max-width: 640px) { .section-desc { margin-left: 0; } }
 
-  .var-card{
-    background: var(--surface); border:1px solid var(--border); border-radius: var(--radius);
-    padding: 16px 18px; margin-bottom: 10px; margin-left: 46px; transition: border-color .15s;
-  }
-  .var-card:hover{ border-color: var(--text-faint); }
-  @media (max-width: 640px){ .var-card, .section-desc{ margin-left:0; } }
+  .var-card-list { margin-left: 50px; display: flex; flex-direction: column; gap: 14px; }
+  @media (max-width: 640px) { .var-card-list { margin-left: 0; } }
 
-  .var-name{
-    font-family: var(--mono); font-size: 0.8438rem; color: var(--text); font-weight: 600;
-    display:flex; align-items:center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;
+  .var-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    transition: border-color 0.15s ease;
   }
+  .var-card:hover {
+    border-color: var(--border-hover);
+  }
+
+  .var-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .var-card-name-group { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .var-card-name {
+    font-family: var(--mono);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .var-copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: var(--sans);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .var-copy-btn:hover {
+    color: var(--text);
+    background: var(--border);
+    border-color: var(--text-faint);
+  }
+
+  .badge {
+    font-family: var(--mono); font-size: 0.65rem; padding: 4px 9px; border-radius: 6px;
+    font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .badge.public { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.25); color: #10B981; }
+  .badge.server { background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.25); color: #F59E0B; }
+
+  .var-card-body { display: flex; flex-direction: column; gap: 8px; }
+  .var-detail-row { display: flex; align-items: baseline; gap: 12px; font-size: 0.8125rem; }
+  @media (max-width: 540px) { .var-detail-row { flex-direction: column; gap: 2px; } }
+  .var-label {
+    color: var(--text-faint);
+    font-size: 0.75rem;
+    font-weight: 600;
+    min-width: 80px;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .var-val { color: var(--text-dim); line-height: 1.5; flex: 1; }
+  .code-tag {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    padding: 2px 7px;
+    border-radius: 5px;
+    color: var(--text);
+  }
+  .var-link-group { display: inline-flex; align-items: center; gap: 6px; }
+  .get-link-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .get-link-badge:hover { text-decoration: underline; opacity: 0.85; }
+  .var-copy-url-btn {
+    background: transparent; border: none; color: var(--text-faint); cursor: pointer; padding: 2px;
+    display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; transition: color 0.15s;
+  }
+  .var-copy-url-btn:hover { color: var(--text); }
+  .get-text { color: var(--text-dim); }
+
   .eyebrow-pill {
     display: inline-flex;
     align-items: center;
@@ -745,22 +842,17 @@
     100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
   }
 
-  .badge{
-    font-family: var(--mono); font-size: 0.65rem; padding: 3px 8px; border-radius: 6px;
-    font-weight: 600; letter-spacing: .03em; text-transform: uppercase;
+  .env-block {
+    margin-left: 50px; background: var(--code-bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 16px; margin-top: 16px; position: relative;
   }
-  .badge.public{ background: var(--badge-public-bg); border: 1px solid var(--badge-public-border); color: var(--badge-public-text); }
-  .badge.server{ background: var(--badge-server-bg); border: 1px solid var(--badge-server-border); color: var(--badge-server-text); }
-
-  .var-row{ font-size: 0.8rem; color: var(--text-dim); margin-top: 5px; display:flex; gap:6px; }
-  .var-row .k{ color: var(--text-faint); flex-shrink:0; min-width: 90px; }
-
-  .env-block{
-    margin-left: 46px; background: var(--code-bg); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 14px 18px; margin-top: 14px; position: relative;
+  @media (max-width: 640px) { .env-block { margin-left: 0; } }
+  .env-block-header {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;
+    padding-bottom: 6px; border-bottom: 1px solid var(--border);
   }
-  @media (max-width: 640px){ .env-block{ margin-left:0; } }
-  .env-block pre{ margin:0; font-family: var(--mono); font-size: 0.7812rem; color: var(--text); overflow-x:auto; line-height: 1.7; }
+  .env-block-title { font-family: var(--mono); font-size: 0.7rem; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.05em; }
+  .env-block pre { margin: 0; font-family: var(--mono); font-size: 0.8125rem; color: var(--text-dim); overflow-x: auto; white-space: pre; }
   .copy-btn{
     position:absolute; top:10px; right:10px; font-family: var(--sans); font-size: 0.6875rem;
     background: var(--surface-2); border:1px solid var(--border); color: var(--text-dim);
@@ -1458,17 +1550,51 @@ DATA.forEach(mod => {
 
   let varsHtml = mod.vars.map(v => `
     <div class="var-card" data-name="${v.name.toLowerCase()}" data-title="${mod.title.en.toLowerCase()}">
-      <div class="var-name">
-        <span>${v.name}</span>
-        <span class="badge ${v.type}">${v.type === 'public' ? 'client' : 'server'}</span>
+      <div class="var-card-header">
+        <div class="var-card-name-group">
+          <span class="var-card-name">${v.name}</span>
+          <button class="var-copy-btn" title="Copy variable name" onclick="copyText('${v.name}', this)">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span lang-content="en">Copy Name</span>
+            <span lang-content="bn">নাম কপি</span>
+          </button>
+        </div>
+        <span class="badge ${v.type}">${v.type === 'public' ? 'Public (Client)' : 'Secret (Server)'}</span>
       </div>
-      <div class="var-row"><span class="k" lang-content="en">Purpose</span><span class="k" lang-content="bn">উদ্দেশ্য</span><span lang-content="en">${v.purpose.en}</span><span lang-content="bn">${v.purpose.bn}</span></div>
-      <div class="var-row"><span class="k" lang-content="en">Used in</span><span class="k" lang-content="bn">ব্যবহার</span><span lang-content="en">${v.used.en}</span><span lang-content="bn">${v.used.bn}</span></div>
-      ${v.get ? `<div class="var-row"><span class="k" lang-content="en">Get it from</span><span class="k" lang-content="bn">যেখান থেকে পাবে</span>${
-        v.url
-          ? `<a class="get-link" href="${v.url}" target="_blank" rel="noopener"><span lang-content="en">${v.get.en}</span><span lang-content="bn">${v.get.bn}</span></a><span class="link-copy" title="Copy link" onclick="event.preventDefault(); copyText('${v.url}', this)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>`
-          : `<span lang-content="en">${v.get.en}</span><span lang-content="bn">${v.get.bn}</span>`
-      }</div>` : ''}
+      <div class="var-card-body">
+        <div class="var-detail-row">
+          <span class="var-label" lang-content="en">Purpose</span>
+          <span class="var-label" lang-content="bn">উদ্দেশ্য</span>
+          <div class="var-val"><span lang-content="en">${v.purpose.en}</span><span lang-content="bn">${v.purpose.bn}</span></div>
+        </div>
+        <div class="var-detail-row">
+          <span class="var-label" lang-content="en">Used In</span>
+          <span class="var-label" lang-content="bn">ব্যবহার</span>
+          <div class="var-val"><code class="code-tag"><span lang-content="en">${v.used.en}</span><span lang-content="bn">${v.used.bn}</span></code></div>
+        </div>
+        ${v.get ? `
+        <div class="var-detail-row">
+          <span class="var-label" lang-content="en">Get Key</span>
+          <span class="var-label" lang-content="bn">কোথা থেকে পাবে</span>
+          <div class="var-val">
+            ${v.url ? `
+              <div class="var-link-group">
+                <a class="get-link-badge" href="${v.url}" target="_blank" rel="noopener">
+                  <span lang-content="en">${v.get.en}</span>
+                  <span lang-content="bn">${v.get.bn}</span>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </a>
+                <button class="var-copy-url-btn" title="Copy provider URL" onclick="event.preventDefault(); copyText('${v.url}', this)">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                </button>
+              </div>
+            ` : `
+              <span lang-content="en" class="get-text">${v.get.en}</span>
+              <span lang-content="bn" class="get-text">${v.get.bn}</span>
+            `}
+          </div>
+        </div>` : ''}
+      </div>
     </div>
   `).join('');
 
@@ -1477,12 +1603,24 @@ DATA.forEach(mod => {
   sec.innerHTML = `
     <div class="section-head">
       <div class="section-icon">${mod.icon}</div>
-      <h2><span lang-content="en">${mod.title.en}</span><span lang-content="bn">${mod.title.bn}</span></h2>
+      <div class="section-title-wrap">
+        <h2><span lang-content="en">${mod.title.en}</span><span lang-content="bn">${mod.title.bn}</span></h2>
+        <span class="var-count-pill">${mod.vars.length} ${mod.vars.length === 1 ? 'variable' : 'variables'}</span>
+      </div>
     </div>
     <div class="section-desc"><span lang-content="en">${mod.desc.en}</span><span lang-content="bn">${mod.desc.bn}</span></div>
-    ${varsHtml}
+    <div class="var-card-list">
+      ${varsHtml}
+    </div>
     <div class="env-block">
-      <button class="copy-btn" onclick="copyBlock(this)"><span lang-content="en">Copy</span><span lang-content="bn">কপি</span></button>
+      <div class="env-block-header">
+        <span class="env-block-title">${mod.title.en} .env snippet</span>
+        <button class="copy-btn" onclick="copyBlock(this)">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span lang-content="en">Copy snippet</span>
+          <span lang-content="bn">কপি করুন</span>
+        </button>
+      </div>
       <pre>${envLines}</pre>
     </div>
   `;
@@ -1538,7 +1676,8 @@ function showToast(msg){
 
 /* ---------------- INTERACTIONS ---------------- */
 function copyBlock(btn){
-  const text = btn.nextElementSibling.textContent;
+  const block = btn.closest('.env-block');
+  const text = block ? block.querySelector('pre').textContent : (btn.nextElementSibling ? btn.nextElementSibling.textContent : '');
   copyText(text, (ok)=>{
     if(!ok) return;
     btn.querySelectorAll('[lang-content]').forEach(s=>{
