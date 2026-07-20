@@ -535,9 +535,8 @@
     transition: background .12s, color .12s;
   }
   .nav-link:hover{ background: var(--surface-2); color: var(--text); }
+  .nav-link:hover .nav-icon, .nav-link.active .nav-icon{ opacity: 1 !important; color: var(--text); }
   .nav-link.active{ background: var(--surface-2); color: var(--text); font-weight:600; }
-  .dot{ width:6px; height:6px; border-radius:50%; flex-shrink:0; background: var(--text-faint); }
-  .nav-link.active .dot{ background: var(--text); }
 
   .sidebar-foot{
     margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border);
@@ -1351,7 +1350,7 @@ DATA.forEach(mod => {
   const nav = document.createElement('div');
   nav.className = 'nav-group';
   nav.innerHTML = `<div class="nav-link" onclick="location.hash='${mod.id}'; closeSidebar();">
-      <span class="dot"></span>
+      <span class="nav-icon" style="display:inline-flex; align-items:center; flex-shrink:0; opacity:0.75; color:currentColor;">${mod.icon}</span>
       <span lang-content="en">${mod.title.en}</span>
       <span lang-content="bn">${mod.title.bn}</span>
     </div>`;
