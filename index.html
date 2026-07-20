@@ -276,6 +276,187 @@
     transition: outline 0.3s ease, box-shadow 0.3s ease;
   }
 
+  /* ---------- Command Palette Spotlight Modal ---------- */
+  .cmd-modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.68);
+    backdrop-filter: blur(10px);
+    z-index: 300;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 80px 20px 20px;
+    animation: backdropFade 0.15s ease-out;
+  }
+  .cmd-modal-backdrop.show { display: flex; }
+
+  @keyframes backdropFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .cmd-modal {
+    width: 580px;
+    max-width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.55), 0 4px 16px rgba(0,0,0,0.2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(85vh - 80px);
+    animation: modalScale 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes modalScale {
+    from { opacity: 0; transform: scale(0.96) translateY(-10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .cmd-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .cmd-input-wrap svg { opacity: 0.6; color: var(--text-dim); flex-shrink: 0; }
+  .cmd-input-wrap input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+  .cmd-input-wrap input::placeholder { color: var(--text-faint); }
+
+  .cmd-esc-badge {
+    font-family: var(--mono);
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: var(--text-faint);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    padding: 3px 6px;
+    border-radius: 5px;
+  }
+
+  .cmd-results {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 12px;
+  }
+
+  .cmd-group-title {
+    padding: 10px 12px 6px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: var(--text-faint);
+    letter-spacing: 0.04em;
+    font-family: var(--sans);
+    text-transform: uppercase;
+  }
+
+  .cmd-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.1s ease;
+    margin-bottom: 2px;
+    color: var(--text-dim);
+  }
+  .cmd-item:hover, .cmd-item.selected {
+    background: var(--surface-2);
+    color: var(--text);
+  }
+
+  .cmd-item-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+  .cmd-item-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+  }
+  .cmd-item-label {
+    font-size: 0.8438rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .cmd-item-sub {
+    font-size: 0.72rem;
+    color: var(--text-faint);
+    font-weight: 400;
+    margin-left: 6px;
+  }
+
+  .cmd-item-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .cmd-item-kbd {
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: var(--text-faint);
+    letter-spacing: 0.05em;
+  }
+  .cmd-item.selected .cmd-item-kbd { color: var(--text-dim); }
+
+  .cmd-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    border-top: 1px solid var(--border);
+    background: var(--surface-2);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+  .cmd-footer-selected {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .cmd-footer-hint {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-faint);
+  }
+  .cmd-footer-hint kbd {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    color: var(--text);
+  }
+
   .nav-link{
     display:flex; align-items:center; gap:9px;
     padding: 7px 10px; border-radius: 7px;
@@ -623,24 +804,10 @@
       <button class="hamburger" id="desktopMenuBtn" onclick="toggleSidebar()" aria-label="Menu" style="margin-right: auto; display: none;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
-      <div class="search-box" id="searchBoxContainer">
+      <div class="search-box" id="searchBoxContainer" onclick="openCmdModal()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input id="searchInput" type="text" placeholder="Filter & search variables…" onfocus="openSearchPopup()" oninput="handleSearchInput(this.value)">
+        <input id="searchInput" type="text" placeholder="Type a command or search…" readonly onfocus="openCmdModal()">
         <span class="search-shortcut-hint">⌘K</span>
-
-        <!-- SEARCH POPUP DROPDOWN -->
-        <div class="search-popup" id="searchPopup">
-          <div class="search-popup-header">
-            <span class="popup-title" id="popupHeaderTitle">Most Common Variables</span>
-            <span class="popup-count" id="searchPopupCount">8 Suggested</span>
-          </div>
-          <div class="search-popup-results" id="searchPopupResults"></div>
-          <div class="search-popup-footer">
-            <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
-            <span><kbd>↵</kbd> select</span>
-            <span><kbd>esc</kbd> close</span>
-          </div>
-        </div>
       </div>
       <div class="toggles">
         <button class="toggle-btn" id="langBtn" onclick="toggleLang()">EN / বাং</button>
@@ -780,6 +947,30 @@
 </div>
 
 <div class="toast" id="toast"></div>
+
+<!-- ============ COMMAND PALETTE SPOTLIGHT MODAL ============ -->
+<div class="cmd-modal-backdrop" id="cmdModalBackdrop" onclick="closeCmdModal(event)">
+  <div class="cmd-modal" id="cmdModal" onclick="event.stopPropagation()">
+    <div class="cmd-input-wrap">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="cmdSearchInput" type="text" placeholder="Type a command or search..." autocomplete="off" oninput="handleCmdInput(this.value)">
+      <kbd class="cmd-esc-badge">ESC</kbd>
+    </div>
+
+    <div class="cmd-results" id="cmdResults"></div>
+
+    <div class="cmd-footer">
+      <div class="cmd-footer-selected">
+        <span class="cmd-icon" id="cmdFooterIcon">🌐</span>
+        <span id="cmdFooterText">Select a command or variable</span>
+      </div>
+      <div class="cmd-footer-hint">
+        <span id="cmdFooterHintText">Go to section</span>
+        <kbd>↵</kbd>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 /* ---------------- DATA ---------------- */
@@ -1304,7 +1495,7 @@ function doShareNative(){
   }
 }
 
-/* ---------------- SEARCH POPUP & COMMON RESULTS ---------------- */
+/* ---------------- COMMAND PALETTE SPOTLIGHT MODAL ---------------- */
 const COMMON_VARS = [
   "NEXT_PUBLIC_SITE_URL",
   "DATABASE_URL",
@@ -1324,87 +1515,175 @@ function getVarDetails(name) {
   return null;
 }
 
-function openSearchPopup() {
-  const popup = document.getElementById('searchPopup');
-  if (popup) popup.classList.add('show');
-  const query = document.getElementById('searchInput').value.trim();
-  renderSearchPopupResults(query);
+function openCmdModal() {
+  const backdrop = document.getElementById('cmdModalBackdrop');
+  if (!backdrop) return;
+  backdrop.classList.add('show');
+  document.body.style.overflow = 'hidden';
+  const input = document.getElementById('cmdSearchInput');
+  if (input) {
+    input.value = '';
+    input.focus();
+  }
+  renderCmdResults('');
 }
 
-function closeSearchPopup() {
-  const popup = document.getElementById('searchPopup');
-  if (popup) popup.classList.remove('show');
+function closeCmdModal(e) {
+  if (e && e.target && e.target !== document.getElementById('cmdModalBackdrop') && e.type !== 'click' && e.key !== 'Escape') {
+    return;
+  }
+  const backdrop = document.getElementById('cmdModalBackdrop');
+  if (backdrop) backdrop.classList.remove('show');
+  document.body.style.overflow = '';
 }
 
-function handleSearchInput(val) {
-  filterVars(val);
-  const popup = document.getElementById('searchPopup');
-  if (popup) popup.classList.add('show');
-  renderSearchPopupResults(val);
+function handleCmdInput(val) {
+  renderCmdResults(val);
 }
 
-function renderSearchPopupResults(q) {
-  const container = document.getElementById('searchPopupResults');
-  const titleEl = document.getElementById('popupHeaderTitle');
-  const countEl = document.getElementById('searchPopupCount');
-  if (!container || !titleEl || !countEl) return;
-  
+function renderCmdResults(q) {
+  const container = document.getElementById('cmdResults');
+  if (!container) return;
   container.innerHTML = '';
   q = q.toLowerCase().trim();
 
-  let items = [];
+  let groups = [];
 
   if (!q) {
-    titleEl.textContent = currentLang === 'bn' ? 'সবচেয়ে জনপ্রিয় ভ্যারিয়েবল' : 'Most Common Variables';
-    COMMON_VARS.forEach(name => {
-      const details = getVarDetails(name);
-      if (details) items.push(details);
+    // Menu Group
+    groups.push({
+      title: 'Menu',
+      items: [
+        { icon: '💿', label: 'Home', sub: 'Scroll to top', kbd: 'GH', action: () => { window.scrollTo({top:0, behavior:'smooth'}); } },
+        { icon: '⚛️', label: 'Components & Modules', sub: 'Jump to reference', kbd: 'GC', action: () => { location.hash = 'github'; } },
+        { icon: '📋', label: 'Copy .env.example', sub: 'Full config template', kbd: 'GE', action: () => { copyFullEnv(); } },
+        { icon: '🐙', label: 'GitHub Repository', sub: 'Open source repo', kbd: 'GR', action: () => { doOpenGitHub(); } },
+        { icon: '🌓', label: 'Toggle Dark / Light Theme', sub: 'Switch theme mode', kbd: 'GT', action: () => { toggleTheme(); } },
+        { icon: '🌐', label: 'Toggle Language (EN / BN)', sub: 'Switch interface lang', kbd: 'GL', action: () => { toggleLang(); } }
+      ]
     });
-    countEl.textContent = `${items.length} ${currentLang === 'bn' ? 'পরামর্শ' : 'Suggested'}`;
+
+    // Most Common Variables Group
+    const commonItems = [];
+    COMMON_VARS.forEach(name => {
+      const d = getVarDetails(name);
+      if (d) {
+        commonItems.push({
+          icon: d.type === 'public' ? '🌐' : '🔑',
+          label: d.name,
+          sub: d.modTitle.en,
+          kbd: d.type === 'public' ? 'PUBLIC' : 'SECRET',
+          action: () => selectVarCard(d.name, d.modId)
+        });
+      }
+    });
+    groups.push({ title: 'Most Common Variables', items: commonItems });
+
+    // Portfolio Modules Group
+    const modItems = DATA.map(m => ({
+      icon: m.icon,
+      label: m.title.en,
+      sub: `${m.vars.length} variables`,
+      kbd: 'MOD',
+      action: () => { location.hash = m.id; }
+    }));
+    groups.push({ title: 'Portfolio Modules', items: modItems });
+
   } else {
-    titleEl.textContent = currentLang === 'bn' ? 'সার্চ ফলাফল' : 'Search Results';
+    // Filtered search
+    const matchingMenu = [
+      { icon: '💿', label: 'Home', sub: 'Scroll to top', kbd: 'GH', action: () => { window.scrollTo({top:0, behavior:'smooth'}); } },
+      { icon: '📋', label: 'Copy .env.example', sub: 'Full config template', kbd: 'GE', action: () => { copyFullEnv(); } },
+      { icon: '🐙', label: 'GitHub Repository', sub: 'Open source repo', kbd: 'GR', action: () => { doOpenGitHub(); } },
+      { icon: '🌓', label: 'Toggle Theme', sub: 'Switch theme', kbd: 'GT', action: () => { toggleTheme(); } },
+      { icon: '🌐', label: 'Toggle Language', sub: 'Switch language', kbd: 'GL', action: () => { toggleLang(); } }
+    ].filter(i => i.label.toLowerCase().includes(q) || i.sub.toLowerCase().includes(q));
+
+    if (matchingMenu.length) {
+      groups.push({ title: 'Commands', items: matchingMenu });
+    }
+
+    const matchingVars = [];
     DATA.forEach(mod => {
       mod.vars.forEach(v => {
         if (v.name.toLowerCase().includes(q) || mod.title.en.toLowerCase().includes(q) || (v.purpose && v.purpose.en && v.purpose.en.toLowerCase().includes(q))) {
-          items.push({ ...v, modId: mod.id, modTitle: mod.title, modIcon: mod.icon });
+          matchingVars.push({
+            icon: v.type === 'public' ? '🌐' : '🔑',
+            label: v.name,
+            sub: mod.title.en,
+            kbd: v.type === 'public' ? 'PUBLIC' : 'SECRET',
+            action: () => selectVarCard(v.name, mod.id)
+          });
         }
       });
     });
-    countEl.textContent = `${items.length} ${currentLang === 'bn' ? 'ফলাফল' : 'Found'}`;
+
+    if (matchingVars.length) {
+      groups.push({ title: 'Variables', items: matchingVars });
+    }
   }
 
-  if (items.length === 0) {
-    container.innerHTML = `<div style="padding: 16px; text-align: center; color: var(--text-faint); font-size: 0.8125rem;">
-      ${currentLang === 'bn' ? 'কোনো ভ্যারিয়েবল পাওয়া যায়নি' : 'No matching variables found'}
-    </div>`;
-    return;
-  }
+  let totalItemsCount = 0;
 
-  items.forEach((item, index) => {
-    const el = document.createElement('div');
-    el.className = `search-popup-item ${index === 0 ? 'selected' : ''}`;
-    el.setAttribute('data-name', item.name);
-    el.onclick = () => selectPopupItem(item.name, item.modId);
+  groups.forEach(g => {
+    if (!g.items.length) return;
 
-    const isPublic = item.type === 'public';
-    const typeLabel = isPublic ? 'PUBLIC' : 'SECRET';
+    const groupEl = document.createElement('div');
+    groupEl.className = 'cmd-group-title';
+    groupEl.textContent = g.title;
+    container.appendChild(groupEl);
 
-    el.innerHTML = `
-      <div class="popup-item-main">
-        <div class="popup-item-name">${item.name}</div>
-        <div class="popup-item-mod"><span>${item.modIcon}</span> <span>${item.modTitle[currentLang] || item.modTitle.en}</span></div>
-      </div>
-      <span class="popup-item-badge ${isPublic ? 'public' : 'secret'}">${typeLabel}</span>
-    `;
+    g.items.forEach(item => {
+      totalItemsCount++;
+      const isFirst = totalItemsCount === 1;
+      const el = document.createElement('div');
+      el.className = `cmd-item ${isFirst ? 'selected' : ''}`;
+      el.onclick = () => {
+        closeCmdModal();
+        item.action();
+      };
+      el.onmouseenter = () => {
+        document.querySelectorAll('.cmd-item').forEach(i => i.classList.remove('selected'));
+        el.classList.add('selected');
+        updateCmdFooter(item);
+      };
 
-    container.appendChild(el);
+      el.innerHTML = `
+        <div class="cmd-item-left">
+          <span class="cmd-item-icon">${item.icon}</span>
+          <span class="cmd-item-label">${item.label} <span class="cmd-item-sub">${item.sub}</span></span>
+        </div>
+        <div class="cmd-item-right">
+          <span class="cmd-item-kbd">${item.kbd}</span>
+        </div>
+      `;
+
+      container.appendChild(el);
+
+      if (isFirst) {
+        updateCmdFooter(item);
+      }
+    });
   });
+
+  if (totalItemsCount === 0) {
+    container.innerHTML = `<div style="padding: 24px; text-align: center; color: var(--text-faint); font-size: 0.8438rem;">
+      No commands or variables found matching "${q}"
+    </div>`;
+  }
 }
 
-function selectPopupItem(varName, modId) {
-  closeSearchPopup();
+function updateCmdFooter(item) {
+  const icon = document.getElementById('cmdFooterIcon');
+  const text = document.getElementById('cmdFooterText');
+  const hint = document.getElementById('cmdFooterHintText');
+  if (icon) icon.textContent = item.icon;
+  if (text) text.textContent = item.label;
+  if (hint) hint.textContent = item.kbd === 'PUBLIC' || item.kbd === 'SECRET' ? 'Copy variable' : 'Go to page';
+}
+
+function selectVarCard(varName, modId) {
   location.hash = modId;
-  
   setTimeout(() => {
     const cards = document.querySelectorAll('.var-card');
     cards.forEach(card => {
@@ -1415,32 +1694,20 @@ function selectPopupItem(varName, modId) {
       }
     });
   }, 100);
-
   copyText(varName);
 }
 
-// Global click & hotkey listeners for Search Popup
-document.addEventListener('click', (e) => {
-  const container = document.getElementById('searchBoxContainer');
-  if (container && !container.contains(e.target)) {
-    closeSearchPopup();
-  }
-});
-
+// Global hotkeys listener
 document.addEventListener('keydown', (e) => {
   if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
     e.preventDefault();
-    const input = document.getElementById('searchInput');
-    if (input) {
-      input.focus();
-      openSearchPopup();
-    }
+    openCmdModal();
   } else if (e.key === 'Escape') {
-    closeSearchPopup();
+    closeCmdModal(e);
   } else {
-    const popup = document.getElementById('searchPopup');
-    if (popup && popup.classList.contains('show')) {
-      const items = popup.querySelectorAll('.search-popup-item');
+    const backdrop = document.getElementById('cmdModalBackdrop');
+    if (backdrop && backdrop.classList.contains('show')) {
+      const items = backdrop.querySelectorAll('.cmd-item');
       if (!items.length) return;
 
       let activeIndex = [...items].findIndex(item => item.classList.contains('selected'));
@@ -1451,12 +1718,22 @@ document.addEventListener('keydown', (e) => {
         activeIndex = (activeIndex + 1) % items.length;
         items[activeIndex].classList.add('selected');
         items[activeIndex].scrollIntoView({ block: 'nearest' });
+        const selectedItem = items[activeIndex];
+        const label = selectedItem.querySelector('.cmd-item-label')?.childNodes[0]?.textContent?.trim() || '';
+        const icon = selectedItem.querySelector('.cmd-item-icon')?.textContent || '';
+        const kbd = selectedItem.querySelector('.cmd-item-kbd')?.textContent || '';
+        updateCmdFooter({ label, icon, kbd });
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
         if (activeIndex >= 0) items[activeIndex].classList.remove('selected');
         activeIndex = (activeIndex - 1 + items.length) % items.length;
         items[activeIndex].classList.add('selected');
         items[activeIndex].scrollIntoView({ block: 'nearest' });
+        const selectedItem = items[activeIndex];
+        const label = selectedItem.querySelector('.cmd-item-label')?.childNodes[0]?.textContent?.trim() || '';
+        const icon = selectedItem.querySelector('.cmd-item-icon')?.textContent || '';
+        const kbd = selectedItem.querySelector('.cmd-item-kbd')?.textContent || '';
+        updateCmdFooter({ label, icon, kbd });
       } else if (e.key === 'Enter') {
         if (activeIndex >= 0 && items[activeIndex]) {
           e.preventDefault();
