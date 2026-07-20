@@ -175,6 +175,26 @@
   .brand-text{ font-family: var(--sans); min-width:0; overflow:hidden; }
   .brand-text b{ color: var(--text); display:block; font-size: 0.7812rem; font-family: var(--sans); font-weight:700; letter-spacing: -0.01em; white-space:nowrap; }
 
+  .sidebar-close {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+  }
+  .sidebar-close:hover {
+    color: var(--text);
+    background: var(--border);
+    border-color: var(--border-hover);
+  }
+
   .toggles{ display:flex; gap:6px; margin-bottom: 18px; }
   .toggle-btn{
     background: var(--surface-2);
@@ -1425,7 +1445,7 @@ DATA.forEach(mod => {
 
   const nav = document.createElement('div');
   nav.className = 'nav-group';
-  nav.innerHTML = `<div class="nav-link" onclick="location.hash='${mod.id}'; closeSidebar();">
+  nav.innerHTML = `<div class="nav-link" onclick="location.hash='${mod.id}'; closeSidebar(true);">
       <span class="nav-icon" style="display:inline-flex; align-items:center; flex-shrink:0; opacity:0.75; color:currentColor;">${mod.icon}</span>
       <span lang-content="en">${mod.title.en}</span>
       <span lang-content="bn">${mod.title.bn}</span>
@@ -1553,12 +1573,16 @@ function toggleSidebar(){
     document.body.style.overflow = open ? 'hidden' : '';
   }
 }
-function closeSidebar(){
-  const sb = document.getElementById('sidebar');
-  const overlay = document.getElementById('sidebarOverlay');
-  if (sb) sb.classList.remove('open');
-  if (overlay) overlay.classList.remove('show');
-  document.body.style.overflow = '';
+function closeSidebar(isNavClick = false){
+  if (window.innerWidth > 1024) {
+    if (!isNavClick) {
+      document.querySelector('.shell')?.classList.add('sidebar-collapsed');
+    }
+  } else {
+    document.getElementById('sidebar')?.classList.remove('open');
+    document.getElementById('sidebarOverlay')?.classList.remove('show');
+    document.body.style.overflow = '';
+  }
 }
 
 /* ---------------- TEXT SIZE ---------------- */
