@@ -6,13 +6,13 @@
 <title>Env Variables — Portfolio Reference</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --radius: 10px;
     --mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
-    --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    --bn: 'Noto Sans Bengali', 'Inter', sans-serif;
+    --sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --bn: 'Noto Sans Bengali', 'Plus Jakarta Sans', 'Inter', sans-serif;
   }
 
   /* ---------- DARK THEME (default) ---------- */
@@ -825,7 +825,42 @@
     opacity:0; pointer-events:none; transition: opacity .18s, transform .18s;
     display:flex; align-items:center; gap:8px;
   }
-  .toast.show{ opacity:1; transform: translateX(-50%) translateY(0); }
+  /* ---------- Back to Top Button ---------- */
+  .back-to-top-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 120;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px) scale(0.92);
+    transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.2s, background 0.15s, border-color 0.15s;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  }
+  .back-to-top-btn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+  .back-to-top-btn:hover {
+    background: var(--border);
+    border-color: var(--border-hover);
+    transform: translateY(-3px) scale(1.03);
+    color: var(--accent);
+  }
+  .back-to-top-btn:active {
+    transform: translateY(0) scale(0.96);
+  }
 </style>
 </head>
 <body data-theme="dark" data-lang="en">
@@ -1023,6 +1058,11 @@
 </div>
 
 <div class="toast" id="toast"></div>
+
+<!-- Back to Top Button -->
+<button class="back-to-top-btn" id="backToTopBtn" onclick="scrollToTop()" aria-label="Back to top" title="Back to top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
 
 <!-- ============ COMMAND PALETTE SPOTLIGHT MODAL ============ -->
 <div class="cmd-modal-backdrop" id="cmdModalBackdrop" onclick="closeCmdModal(event)">
@@ -1958,6 +1998,21 @@ const observer = new IntersectionObserver((entries)=>{
   });
 }, { rootMargin: '-20% 0px -70% 0px' });
 sections.forEach(s=>observer.observe(s));
+
+/* ---------------- BACK TO TOP ---------------- */
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('backToTopBtn');
+  if (!btn) return;
+  if (window.scrollY > 300) {
+    btn.classList.add('show');
+  } else {
+    btn.classList.remove('show');
+  }
+});
 </script>
 
 </body>
