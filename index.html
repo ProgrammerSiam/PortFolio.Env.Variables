@@ -819,17 +819,11 @@
         <button class="toggle-btn" id="textLargerBtn" onclick="changeTextSize(1)" aria-label="Larger text">A+</button>
       </div>
       <div class="action-btn-group">
-        <button class="split-btn" id="shareBtnDesktop" onclick="toggleShareMenu(event)" aria-label="Copy page options">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          <span lang-content="en">Copy page</span>
-          <span lang-content="bn">পেজ কপি</span>
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+        <button class="split-btn icon-btn" id="shareBtnIcon" onclick="toggleSharePopup(event)" aria-label="Share options">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
         </button>
-        <button class="split-btn icon-btn" onclick="doShareNative()" aria-label="Share">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>
-        </button>
-        <button class="split-btn icon-btn" onclick="doOpenGitHub()" aria-label="Open in GitHub">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <button class="split-btn icon-btn" id="nextBtnIcon" onclick="doOpenGitHub()" aria-label="Next">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </button>
       </div>
     </div>
@@ -1408,12 +1402,12 @@ function pageUrl(){
   return window.location.href.split('#')[0];
 }
 function toggleShareMenu(e){
-  e.stopPropagation();
+  if (e) e.stopPropagation();
   const menu = document.getElementById('shareMenu');
   const isShown = menu.classList.contains('show');
   if (isShown) { menu.classList.remove('show'); return; }
-  const btn = e.currentTarget;
-  const rect = btn.getBoundingClientRect();
+  const btnGroup = document.querySelector('.action-btn-group');
+  const rect = btnGroup ? btnGroup.getBoundingClientRect() : (e ? e.currentTarget.getBoundingClientRect() : { right: window.innerWidth - 32, bottom: 64, top: 0 });
   menu.classList.add('show');
   const menuWidth = menu.offsetWidth || 210;
   let left = rect.right - menuWidth;
@@ -1425,8 +1419,8 @@ function toggleShareMenu(e){
 }
 document.addEventListener('click', (e)=>{
   const menu = document.getElementById('shareMenu');
-  if (!menu.classList.contains('show')) return;
-  if (!menu.contains(e.target) && e.target.id !== 'shareBtnDesktop' && e.target.id !== 'shareBtnMobile') {
+  if (!menu || !menu.classList.contains('show')) return;
+  if (!menu.contains(e.target) && !e.target.closest('.action-btn-group')) {
     menu.classList.remove('show');
   }
 });
