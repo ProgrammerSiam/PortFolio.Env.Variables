@@ -73,7 +73,11 @@
   body[data-lang="bn"] span[lang-content="bn"].block{ display:block; }
 
   /* ---------- Layout ---------- */
-  .shell{ display:grid; grid-template-columns: 280px 1fr; min-height:100vh; }
+  .shell{ display:grid; grid-template-columns: 280px 1fr; min-height:100vh; transition: grid-template-columns 0.3s ease; }
+  .shell.sidebar-collapsed { grid-template-columns: 0 1fr; }
+  .shell.sidebar-collapsed .sidebar { overflow: hidden; padding-left: 0; padding-right: 0; opacity: 0; border: none; }
+  .shell.sidebar-collapsed #desktopMenuBtn { display: flex !important; }
+  @media (max-width: 880px) { #desktopMenuBtn { display: none !important; } }
 
   .mobile-topbar{
     display:none;
@@ -182,16 +186,31 @@
   @media (max-width: 880px){ main{ padding: 36px 20px 100px; } }
 
   .main-top-actions {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: var(--bg);
+    padding: 24px 48px;
+    margin: -56px -48px 36px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     gap: 12px;
-    margin-bottom: 36px;
     flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
   }
   .main-top-actions .toggles { margin-bottom: 0; }
+  .main-top-actions .search-box { margin-bottom: 0; min-width: 240px; }
+  
+  @media (max-width: 880px){
+    .main-top-actions {
+      padding: 16px 20px;
+      margin: -36px -20px 24px;
+    }
+  }
   @media (max-width: 480px){
     .main-top-actions { justify-content: flex-start; }
+    .main-top-actions .search-box { width: 100%; min-width: 0; }
   }
 
   .hero{ margin-bottom: 44px; }
@@ -296,14 +315,14 @@
   ::-webkit-scrollbar-track{ background: transparent; }
   ::-webkit-scrollbar-thumb{ background: var(--border); border-radius: 8px; }
 
-  /* ---------- Sidebar close (mobile) ---------- */
+  /* ---------- Sidebar close ---------- */
   .sidebar-close{
-    display:none;
+    display:flex;
     width: 32px; height:32px; align-items:center; justify-content:center;
     background: var(--surface-2); border:1px solid var(--border); border-radius:8px;
     cursor:pointer; color: var(--text); margin-bottom: 14px;
+    margin-left: auto;
   }
-  @media (max-width: 880px){ .sidebar-close{ display:flex; } }
 
   /* ---------- Share button + dropdown ---------- */
   .share-wrap{ position: relative; flex-shrink:0; }
@@ -399,11 +418,6 @@
       </div>
     </div>
 
-    <div class="search-box">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input id="searchInput" type="text" placeholder="Filter variables…" oninput="filterVars(this.value)">
-    </div>
-
     <nav id="navList"></nav>
 
     <div class="sidebar-foot">
@@ -417,6 +431,13 @@
   <main>
 
     <div class="main-top-actions">
+      <button class="hamburger" id="desktopMenuBtn" onclick="toggleSidebar()" aria-label="Menu" style="margin-right: auto; display: none;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="search-box">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="searchInput" type="text" placeholder="Filter variables…" oninput="filterVars(this.value)">
+      </div>
       <div class="toggles">
         <button class="toggle-btn" id="langBtn" onclick="toggleLang()">EN / বাং</button>
         <button class="toggle-btn" id="themeBtn" onclick="toggleTheme()">☾ / ☀</button>
@@ -933,18 +954,26 @@ function copyFullEnv(){
   });
 }
 
-/* ---------------- MOBILE SIDEBAR ---------------- */
+/* ---------------- SIDEBAR ---------------- */
 function toggleSidebar(){
-  const sb = document.getElementById('sidebar');
-  const overlay = document.getElementById('sidebarOverlay');
-  const open = sb.classList.toggle('open');
-  overlay.classList.toggle('show', open);
-  document.body.style.overflow = open ? 'hidden' : '';
+  if (window.innerWidth > 880) {
+    document.querySelector('.shell').classList.toggle('sidebar-collapsed');
+  } else {
+    const sb = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const open = sb.classList.toggle('open');
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
 }
 function closeSidebar(){
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sidebarOverlay').classList.remove('show');
-  document.body.style.overflow = '';
+  if (window.innerWidth > 880) {
+    document.querySelector('.shell').classList.add('sidebar-collapsed');
+  } else {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('show');
+    document.body.style.overflow = '';
+  }
 }
 
 /* ---------------- TEXT SIZE ---------------- */
