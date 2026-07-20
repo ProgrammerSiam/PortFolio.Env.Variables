@@ -345,36 +345,53 @@
   }
   .sidebar-close:hover{ color: var(--text); border-color: var(--text-faint); background: var(--border); }
 
-  /* ---------- Share button + dropdown ---------- */
-  .share-wrap{ position: relative; flex-shrink:0; }
-  .share-btn{
-    display:flex; align-items:center; gap:6px;
-    background: var(--surface-2); border:1px solid var(--border); color: var(--text-dim);
-    font-family: var(--sans); font-size: 0.75rem; font-weight:600;
-    padding: 6px 10px; border-radius: 7px; cursor:pointer; transition: all .12s;
+  /* ---------- Split Action Group & Share menu ---------- */
+  .action-btn-group{
+    display: inline-flex;
+    align-items: center;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2px;
+    gap: 2px;
   }
-  .share-btn:hover{ color: var(--text); border-color: var(--text-faint); }
-  @media (max-width: 880px){ .share-wrap{ display:none; } }
+  .split-btn{
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    font-family: var(--sans);
+    font-size: 0.7812rem;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all .12s ease;
+  }
+  .split-btn:hover{ color: var(--text); background: rgba(255,255,255,0.06); }
+  .split-btn.icon-btn{ padding: 5px 8px; }
 
   .share-menu{
     display:none;
     position: fixed;
     z-index: 60;
-    min-width: 200px;
+    min-width: 210px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 6px;
-    box-shadow: 0 12px 32px rgba(0,0,0,.35);
+    box-shadow: 0 14px 36px rgba(0,0,0,.45);
   }
   .share-menu.show{ display:block; }
   .share-menu .menu-item{
     display:flex; align-items:center; gap:10px;
-    padding: 9px 10px; border-radius: 8px; cursor:pointer;
-    font-size: 0.8125rem; color: var(--text); transition: background .1s;
+    padding: 8px 12px; border-radius: 8px; cursor:pointer;
+    font-size: 0.8125rem; font-weight: 500; color: var(--text); transition: background .12s ease;
   }
   .share-menu .menu-item:hover{ background: var(--surface-2); }
-  .share-menu .menu-item svg{ flex-shrink:0; opacity:.8; }
+  .share-menu .menu-item svg{ flex-shrink:0; opacity:.85; }
   .share-menu .menu-divider{ height:1px; background: var(--border); margin: 5px 2px; }
 
   /* ---------- URL / get-it-from link row ---------- */
@@ -468,11 +485,18 @@
         <button class="toggle-btn" id="textResetBtn" onclick="changeTextSize(0)" aria-label="Reset text size">A</button>
         <button class="toggle-btn" id="textLargerBtn" onclick="changeTextSize(1)" aria-label="Larger text">A+</button>
       </div>
-      <div class="share-wrap">
-        <button class="share-btn" id="shareBtnDesktop" onclick="toggleShareMenu(event)" aria-label="Share this page">
+      <div class="action-btn-group">
+        <button class="split-btn" id="shareBtnDesktop" onclick="toggleShareMenu(event)" aria-label="Copy page options">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span lang-content="en">Copy page</span>
+          <span lang-content="bn">পেজ কপি</span>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <button class="split-btn icon-btn" onclick="doShareNative()" aria-label="Share">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>
-          <span lang-content="en">Share</span>
-          <span lang-content="bn">শেয়ার</span>
+        </button>
+        <button class="split-btn icon-btn" onclick="doOpenGitHub()" aria-label="Open in GitHub">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </button>
       </div>
     </div>
@@ -554,36 +578,35 @@
   </main>
 </div>
 
-<!-- ============ SHARE MENU ============ -->
+<!-- ============ SHARE / ACTION MENU ============ -->
 <div class="share-menu" id="shareMenu">
-  <div class="menu-item" onclick="doCopyLink()">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-    <span lang-content="en">Copy link</span><span lang-content="bn">লিংক কপি করো</span>
-  </div>
-  <div class="menu-item" onclick="doCopyPage()">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-    <span lang-content="en">Copy page</span><span lang-content="bn">পেজ কপি করো</span>
-  </div>
   <div class="menu-item" onclick="doViewMarkdown()">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M8 16V8l4 4 4-4v8"/></svg>
     <span lang-content="en">View as Markdown</span><span lang-content="bn">Markdown হিসেবে দেখো</span>
-  </div>
-  <div class="menu-divider"></div>
-  <div class="menu-item" onclick="doShareX()">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.6l-5.2-6.8L5.2 22H2l8.1-9.3L2 2h6.7l4.7 6.2L18.9 2Z"/></svg>
-    <span lang-content="en">Share on X</span><span lang-content="bn">X-এ শেয়ার করো</span>
-  </div>
-  <div class="menu-item" onclick="doShareLinkedIn()">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2 3.77-2 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.3-.02-2.97-1.8-2.97-1.8 0-2.08 1.4-2.08 2.87V21h-4V9Z"/></svg>
-    <span lang-content="en">Share on LinkedIn</span><span lang-content="bn">LinkedIn-এ শেয়ার করো</span>
   </div>
   <div class="menu-item" onclick="doOpenGitHub()">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.1.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.9-1.29 2.74-1.02 2.74-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
     <span lang-content="en">Open in GitHub</span><span lang-content="bn">GitHub-এ খোলো</span>
   </div>
-  <div class="menu-item" onclick="doOtherApp()">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>
-    <span lang-content="en">Other app</span><span lang-content="bn">অন্য অ্যাপ</span>
+  <div class="menu-item" onclick="doOpenChatGPT()">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.28 9.82a6 6 0 0 0-.53-5.02 6.07 6.07 0 0 0-6.61-2.8 6 6 0 0 0-4.63-2 6.07 6.07 0 0 0-5.8 4.1 6 6 0 0 0-4.1 2.8 6.07 6.07 0 0 0 .8 7.18 6 6 0 0 0 .53 5.02 6.07 6.07 0 0 0 6.61 2.8 6 6 0 0 0 4.63 2 6.07 6.07 0 0 0 5.8-4.1 6 6 0 0 0 4.1-2.8 6.07 6.07 0 0 0-.8-7.18Z"/></svg>
+    <span lang-content="en">Open in ChatGPT</span><span lang-content="bn">ChatGPT-এ খোলো</span>
+  </div>
+  <div class="menu-item" onclick="doOpenClaude()">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5z"/></svg>
+    <span lang-content="en">Open in Claude</span><span lang-content="bn">Claude-এ খোলো</span>
+  </div>
+  <div class="menu-item" onclick="doOpenCursor()">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 2 8 8-8 8-8-8z"/></svg>
+    <span lang-content="en">Open in Cursor</span><span lang-content="bn">Cursor-এ খোলো</span>
+  </div>
+  <div class="menu-item" onclick="doOpenGrok()">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+    <span lang-content="en">Open in Grok</span><span lang-content="bn">Grok-এ খোলো</span>
+  </div>
+  <div class="menu-item" onclick="doOpenScira()">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.59L8.41 12 13 7.41V11h4v2h-4z"/></svg>
+    <span lang-content="en">Open in Scira AI</span><span lang-content="bn">Scira AI-এ খোলো</span>
   </div>
 </div>
 
@@ -1080,29 +1103,38 @@ function doViewMarkdown(){
   window.open(url, '_blank');
   document.getElementById('shareMenu').classList.remove('show');
 }
-function doShareX(){
-  const url = encodeURIComponent(pageUrl());
-  const text = encodeURIComponent('Every env variable a Next.js portfolio needs — a full reference by ProgrammerSiam');
-  window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank', 'noopener,width=560,height=520');
-  document.getElementById('shareMenu').classList.remove('show');
-}
-function doShareLinkedIn(){
-  const url = encodeURIComponent(pageUrl());
-  window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank', 'noopener,width=560,height=560');
-  document.getElementById('shareMenu').classList.remove('show');
-}
 function doOpenGitHub(){
   window.open('https://github.com/ProgrammerSiam/PortFolio.Env.Variables', '_blank', 'noopener');
   document.getElementById('shareMenu').classList.remove('show');
 }
-function doOtherApp(){
+function doOpenChatGPT(){
+  const text = "PortFolio.Env.Variables Reference:\n" + DATA.map(mod => mod.title.en + ": " + mod.vars.map(v => v.name).join(", ")).join("\n");
+  window.open(`https://chatgpt.com/?q=${encodeURIComponent(text)}`, '_blank', 'noopener');
+  document.getElementById('shareMenu').classList.remove('show');
+}
+function doOpenClaude(){
+  window.open('https://claude.ai/new', '_blank', 'noopener');
+  document.getElementById('shareMenu').classList.remove('show');
+}
+function doOpenCursor(){
+  window.open('https://cursor.com', '_blank', 'noopener');
+  document.getElementById('shareMenu').classList.remove('show');
+}
+function doOpenGrok(){
+  window.open('https://grok.com', '_blank', 'noopener');
+  document.getElementById('shareMenu').classList.remove('show');
+}
+function doOpenScira(){
+  window.open('https://scira.app', '_blank', 'noopener');
+  document.getElementById('shareMenu').classList.remove('show');
+}
+function doShareNative(){
   if (navigator.share) {
     navigator.share({ title: 'PortFolio.Env.Variables', url: pageUrl() }).catch(()=>{});
   } else {
     copyText(pageUrl());
     showToast(currentLang === 'bn' ? 'শেয়ার সাপোর্ট নেই — লিংক কপি হয়েছে' : 'Sharing not supported — link copied instead');
   }
-  document.getElementById('shareMenu').classList.remove('show');
 }
 
 function filterVars(q){
