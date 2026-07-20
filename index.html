@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Env Variables — Portfolio Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --radius: 10px;
@@ -14,30 +17,44 @@
 
   /* ---------- DARK THEME (default) ---------- */
   [data-theme="dark"]{
-    --bg: #0A0A0A;
-    --surface: #131313;
-    --surface-2: #1A1A1A;
-    --border: #262626;
-    --text: #F2F2F2;
-    --text-dim: #8C8C8C;
-    --text-faint: #4A4A4A;
+    --bg: #09090B;
+    --surface: #121215;
+    --surface-2: #1C1C21;
+    --border: #27272A;
+    --border-hover: #3F3F46;
+    --text: #F4F4F5;
+    --text-dim: #A1A1AA;
+    --text-faint: #52525B;
     --accent: #FFFFFF;
-    --accent-inv: #0A0A0A;
-    --code-bg: #0D0D0D;
+    --accent-inv: #09090B;
+    --code-bg: #0D0D10;
+    --badge-public-bg: rgba(56, 189, 248, 0.1);
+    --badge-public-border: rgba(56, 189, 248, 0.25);
+    --badge-public-text: #38BDF8;
+    --badge-server-bg: rgba(168, 85, 247, 0.1);
+    --badge-server-border: rgba(168, 85, 247, 0.25);
+    --badge-server-text: #C084FC;
   }
 
   /* ---------- LIGHT THEME ---------- */
   [data-theme="light"]{
-    --bg: #FFFFFF;
-    --surface: #FAFAFA;
-    --surface-2: #F1F1F1;
-    --border: #E3E3E3;
-    --text: #101010;
-    --text-dim: #6B6B6B;
-    --text-faint: #A8A8A8;
-    --accent: #0A0A0A;
+    --bg: #FAFAFA;
+    --surface: #FFFFFF;
+    --surface-2: #F4F4F5;
+    --border: #E4E4E7;
+    --border-hover: #D4D4D8;
+    --text: #09090B;
+    --text-dim: #71717A;
+    --text-faint: #A1A1AA;
+    --accent: #09090B;
     --accent-inv: #FFFFFF;
-    --code-bg: #F5F5F5;
+    --code-bg: #F4F4F5;
+    --badge-public-bg: rgba(2, 132, 199, 0.08);
+    --badge-public-border: rgba(2, 132, 199, 0.2);
+    --badge-public-text: #0284C7;
+    --badge-server-bg: rgba(147, 51, 234, 0.08);
+    --badge-server-border: rgba(147, 51, 234, 0.2);
+    --badge-server-text: #9333EA;
   }
 
   * { box-sizing: border-box; }
@@ -122,20 +139,20 @@
   .sidebar{
     position: sticky; top:0; height:100vh; overflow-y:auto;
     border-right:1px solid var(--border);
-    padding: 26px 20px;
+    padding: 24px 18px;
     background: var(--surface);
   }
 
-  .brand{ display:flex; align-items:center; justify-content:space-between; margin-bottom: 20px; }
-  .brand-inner{ display:flex; align-items:center; gap:10px; }
+  .brand{ display:flex; align-items:center; justify-content:space-between; margin-bottom: 20px; gap:8px; }
+  .brand-inner{ display:flex; align-items:center; gap:9px; min-width:0; }
   .brand-mark{
     width:30px; height:30px; border-radius:8px;
     background: var(--accent); color: var(--accent-inv);
     display:flex; align-items:center; justify-content:center;
     font-family: var(--mono); font-weight:700; font-size: 0.75rem; flex-shrink:0;
   }
-  .brand-text{ font-family: var(--mono); font-size: 0.7812rem; color: var(--text-dim); letter-spacing:.02em; }
-  .brand-text b{ color: var(--text); display:block; font-size: 0.875rem; font-family: var(--sans); }
+  .brand-text{ font-family: var(--mono); font-size: 0.6875rem; color: var(--text-dim); letter-spacing:.01em; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .brand-text b{ color: var(--text); display:block; font-size: 0.8438rem; font-family: var(--sans); }
 
   .toggles{ display:flex; gap:6px; margin-bottom: 18px; }
   .toggle-btn{
@@ -153,7 +170,7 @@
     white-space: nowrap;
   }
   .toggle-btn:hover{ color: var(--text); border-color: var(--text-faint); }
-  .toggle-btn.active{ background: var(--accent); color: var(--accent-inv); border-color: var(--accent); }
+  .toggle-btn.active{ background: var(--text); color: var(--bg); border-color: var(--text); }
 
   .search-box{ position: relative; }
   .search-box input{
@@ -161,7 +178,8 @@
     border-radius: 8px; padding: 8px 12px 8px 34px; color: var(--text);
     font-family: var(--sans); font-size: 0.8438rem; outline:none; transition: border-color .15s, box-shadow .15s;
   }
-  .search-box input:focus{ border-color: var(--text-dim); box-shadow: 0 0 0 3px rgba(255,255,255,0.06); }
+  .search-box input:focus{ border-color: var(--text-dim); box-shadow: 0 0 0 3px rgba(0,0,0,0.05); }
+  [data-theme="dark"] .search-box input:focus{ box-shadow: 0 0 0 3px rgba(255,255,255,0.06); }
   .search-box svg{ position:absolute; left:11px; top:50%; transform:translateY(-50%); opacity:.5; pointer-events:none; }
 
   .nav-link{
@@ -283,13 +301,41 @@
     font-family: var(--mono); font-size: 0.8438rem; color: var(--text); font-weight: 600;
     display:flex; align-items:center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;
   }
-  .badge{
-    font-family: var(--sans); font-size: 0.625rem; padding: 2px 7px; border-radius: 20px;
-    font-weight: 600; letter-spacing: .02em; text-transform: uppercase;
-    border: 1px solid var(--border); color: var(--text-dim);
+  .eyebrow-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 16px;
   }
-  .badge.public{ background: var(--surface-2); }
-  .badge.server{ background: var(--surface-2); }
+  .pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10B981;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+  }
+
+  .badge{
+    font-family: var(--mono); font-size: 0.65rem; padding: 3px 8px; border-radius: 6px;
+    font-weight: 600; letter-spacing: .03em; text-transform: uppercase;
+  }
+  .badge.public{ background: var(--badge-public-bg); border: 1px solid var(--badge-public-border); color: var(--badge-public-text); }
+  .badge.server{ background: var(--badge-server-bg); border: 1px solid var(--badge-server-border); color: var(--badge-server-text); }
 
   .var-row{ font-size: 0.8rem; color: var(--text-dim); margin-top: 5px; display:flex; gap:6px; }
   .var-row .k{ color: var(--text-faint); flex-shrink:0; min-width: 90px; }
@@ -502,7 +548,8 @@
     </div>
 
     <div class="hero">
-      <div class="eyebrow">
+      <div class="eyebrow-pill">
+        <span class="pulse-dot"></span>
         <span lang-content="en">Environment Reference</span>
         <span lang-content="bn">এনভায়রনমেন্ট রেফারেন্স</span>
       </div>
