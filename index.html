@@ -151,8 +151,8 @@
     display:flex; align-items:center; justify-content:center;
     font-family: var(--mono); font-weight:700; font-size: 0.75rem; flex-shrink:0;
   }
-  .brand-text{ font-family: var(--mono); font-size: 0.6875rem; color: var(--text-dim); letter-spacing:.01em; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .brand-text b{ color: var(--text); display:block; font-size: 0.8438rem; font-family: var(--sans); }
+  .brand-text{ font-family: var(--mono); min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .brand-text b{ color: var(--text); display:block; font-size: 0.7812rem; font-family: var(--mono); font-weight:700; letter-spacing: -0.01em; }
 
   .toggles{ display:flex; gap:6px; margin-bottom: 18px; }
   .toggle-btn{
@@ -469,10 +469,9 @@
   <!-- ============ MOBILE TOPBAR ============ -->
   <div class="mobile-topbar">
     <div class="brand-inner">
-      <div class="brand-mark">.env</div>
+  
       <div class="brand-text">
-        <b lang-content="en">Env Guide</b>
-        <b lang-content="bn">এনভি গাইড</b>
+        <b>PortFolio.Env.Variables</b>
       </div>
     </div>
     <div style="display:flex; align-items:center; gap:8px;">
@@ -492,9 +491,7 @@
       <div class="brand-inner">
         <div class="brand-mark">.env</div>
         <div class="brand-text">
-          <b lang-content="en">Env Guide</b>
-          <b lang-content="bn">এনভি গাইড</b>
-          PortFolio.Env.Variables
+          <b>PortFolio.Env.Variables</b>
         </div>
       </div>
       <div class="sidebar-close" id="sidebarClose" onclick="closeSidebar()" aria-label="Close menu">
