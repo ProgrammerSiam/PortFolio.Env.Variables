@@ -139,7 +139,7 @@
   .sidebar{
     position: sticky; top:0; height:100vh; overflow-y:auto;
     border-right:1px solid var(--border);
-    padding: 24px 18px;
+    padding: 0 18px 24px;
     background: var(--surface);
   }
 
@@ -152,9 +152,11 @@
     align-items:center;
     justify-content:space-between;
     gap:8px;
-    margin: -24px -18px 20px -18px;
-    padding: 16px 18px;
+    margin: 0 -18px 20px -18px;
+    padding: 0 18px;
+    height: 64px;
     border-bottom: 1px solid var(--border);
+    box-sizing: border-box;
   }
   .brand-inner{ display:flex; align-items:center; gap:8px; min-width:0; }
   .brand-mark{
@@ -163,8 +165,8 @@
     display:flex; align-items:center; justify-content:center;
     font-family: var(--mono); font-weight:700; font-size: 0.75rem; flex-shrink:0;
   }
-  .brand-text{ font-family: var(--mono); min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .brand-text b{ color: var(--text); display:block; font-size: 0.6875rem; font-family: var(--mono); font-weight:700; letter-spacing: -0.03em; }
+  .brand-text{ font-family: var(--sans); min-width:0; overflow:hidden; }
+  .brand-text b{ color: var(--text); display:block; font-size: 0.7812rem; font-family: var(--sans); font-weight:700; letter-spacing: -0.01em; white-space:nowrap; }
 
   .toggles{ display:flex; gap:6px; margin-bottom: 18px; }
   .toggle-btn{
@@ -220,17 +222,19 @@
     top: 0;
     z-index: 30;
     background: var(--bg);
-    padding: 16px 48px;
+    backdrop-filter: blur(12px);
+    padding: 0 48px;
     margin: 0 -48px 32px;
+    height: 64px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     gap: 10px;
-    flex-wrap: wrap;
     border-bottom: 1px solid var(--border);
+    box-sizing: border-box;
   }
   @media (max-width: 880px){
-    .main-top-actions { margin: 0 -20px 24px; padding: 14px 20px; }
+    .main-top-actions { margin: 0 -20px 24px; padding: 0 20px; }
   }
   .main-top-actions .toggles { margin-bottom: 0; }
   .main-top-actions .search-box { margin-bottom: 0; min-width: 220px; flex: 1; max-width: 280px; }
