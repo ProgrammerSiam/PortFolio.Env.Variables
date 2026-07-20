@@ -208,14 +208,17 @@
     top: 0;
     z-index: 30;
     background: var(--bg);
-    padding: 20px 0 16px;
-    margin-bottom: 32px;
+    padding: 16px 48px;
+    margin: 0 -48px 32px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     gap: 10px;
     flex-wrap: wrap;
     border-bottom: 1px solid var(--border);
+  }
+  @media (max-width: 880px){
+    .main-top-actions { margin: 0 -20px 24px; padding: 14px 20px; }
   }
   .main-top-actions .toggles { margin-bottom: 0; }
   .main-top-actions .search-box { margin-bottom: 0; min-width: 220px; flex: 1; max-width: 280px; }
