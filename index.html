@@ -155,14 +155,14 @@
   .toggle-btn:hover{ color: var(--text); border-color: var(--text-faint); }
   .toggle-btn.active{ background: var(--accent); color: var(--accent-inv); border-color: var(--accent); }
 
-  .search-box{ position: relative; margin-bottom: 18px; }
+  .search-box{ position: relative; }
   .search-box input{
     width:100%; background: var(--surface-2); border:1px solid var(--border);
-    border-radius: 8px; padding: 9px 12px 9px 32px; color: var(--text);
-    font-family: var(--sans); font-size: 0.8438rem; outline:none; transition: border-color .15s;
+    border-radius: 8px; padding: 8px 12px 8px 34px; color: var(--text);
+    font-family: var(--sans); font-size: 0.8438rem; outline:none; transition: border-color .15s, box-shadow .15s;
   }
-  .search-box input:focus{ border-color: var(--text-faint); }
-  .search-box svg{ position:absolute; left:10px; top:50%; transform:translateY(-50%); opacity:.45; }
+  .search-box input:focus{ border-color: var(--text-dim); box-shadow: 0 0 0 3px rgba(255,255,255,0.06); }
+  .search-box svg{ position:absolute; left:11px; top:50%; transform:translateY(-50%); opacity:.5; pointer-events:none; }
 
   .nav-link{
     display:flex; align-items:center; gap:9px;
@@ -190,27 +190,48 @@
     top: 0;
     z-index: 30;
     background: var(--bg);
-    padding: 24px 48px;
-    margin: -56px -48px 36px;
+    padding: 16px 0;
+    margin-bottom: 32px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     flex-wrap: wrap;
     border-bottom: 1px solid var(--border);
   }
   .main-top-actions .toggles { margin-bottom: 0; }
-  .main-top-actions .search-box { margin-bottom: 0; min-width: 240px; }
-  
-  @media (max-width: 880px){
-    .main-top-actions {
-      padding: 16px 20px;
-      margin: -36px -20px 24px;
-    }
+  .main-top-actions .search-box { margin-bottom: 0; min-width: 220px; flex: 1; max-width: 280px; }
+
+  .segmented-control {
+    display: inline-flex;
+    align-items: center;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 3px;
+    gap: 2px;
   }
+  .segmented-control .toggle-btn {
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    background: transparent;
+    color: var(--text-dim);
+  }
+  .segmented-control .toggle-btn:hover {
+    color: var(--text);
+    background: rgba(255,255,255,0.05);
+  }
+  .segmented-control .toggle-btn.active {
+    background: var(--accent);
+    color: var(--accent-inv);
+    font-weight: 700;
+  }
+  
   @media (max-width: 480px){
     .main-top-actions { justify-content: flex-start; }
-    .main-top-actions .search-box { width: 100%; min-width: 0; }
+    .main-top-actions .search-box { width: 100%; max-width: 100%; min-width: 0; }
   }
 
   .hero{ margin-bottom: 44px; }
@@ -318,11 +339,11 @@
   /* ---------- Sidebar close ---------- */
   .sidebar-close{
     display:flex;
-    width: 32px; height:32px; align-items:center; justify-content:center;
+    width: 30px; height:30px; align-items:center; justify-content:center;
     background: var(--surface-2); border:1px solid var(--border); border-radius:8px;
-    cursor:pointer; color: var(--text); margin-bottom: 14px;
-    margin-left: auto;
+    cursor:pointer; color: var(--text-dim); transition: all .15s; flex-shrink:0;
   }
+  .sidebar-close:hover{ color: var(--text); border-color: var(--text-faint); background: var(--border); }
 
   /* ---------- Share button + dropdown ---------- */
   .share-wrap{ position: relative; flex-shrink:0; }
@@ -404,9 +425,6 @@
 
   <!-- ============ SIDEBAR ============ -->
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-close" id="sidebarClose" onclick="closeSidebar()" aria-label="Close menu">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </div>
     <div class="brand">
       <div class="brand-inner">
         <div class="brand-mark">.env</div>
@@ -415,6 +433,9 @@
           <b lang-content="bn">এনভি গাইড</b>
           PortFolio.Env.Variables
         </div>
+      </div>
+      <div class="sidebar-close" id="sidebarClose" onclick="closeSidebar()" aria-label="Close menu">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </div>
     </div>
 
@@ -442,7 +463,7 @@
         <button class="toggle-btn" id="langBtn" onclick="toggleLang()">EN / বাং</button>
         <button class="toggle-btn" id="themeBtn" onclick="toggleTheme()">☾ / ☀</button>
       </div>
-      <div class="toggles">
+      <div class="segmented-control">
         <button class="toggle-btn" id="textSmallerBtn" onclick="changeTextSize(-1)" aria-label="Smaller text">A−</button>
         <button class="toggle-btn" id="textResetBtn" onclick="changeTextSize(0)" aria-label="Reset text size">A</button>
         <button class="toggle-btn" id="textLargerBtn" onclick="changeTextSize(1)" aria-label="Larger text">A+</button>
