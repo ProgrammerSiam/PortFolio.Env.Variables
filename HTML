@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Env Variables — Portfolio Reference</title>
+<style>
+  :root{
+    --bg: #0A0E14;
+    --surface: #11161D;
+    --surface-2: #171E27;
+    --border: #212B36;
+    --text: #E7EDF4;
+    --text-dim: #7E8CA0;
+    --text-faint: #4C5867;
+    --accent: #4FE3C1;
+    --accent-dim: #2A5C51;
+    --violet: #B39CFF;
+    --amber: #F5B94D;
+    --rose: #FF8FA3;
+    --blue: #7EC8FF;
+    --mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --radius: 10px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+
+  code, .mono { font-family: var(--mono); }
+
+  /* ---------- Layout ---------- */
+  .shell{
+    display:grid;
+    grid-template-columns: 280px 1fr;
+    min-height:100vh;
+  }
+
+  @media (max-width: 880px){
+    .shell{ grid-template-columns: 1fr; }
+    .sidebar{ position:relative; height:auto; border-right:none; border-bottom:1px solid var(--border); }
+  }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar{
+    position: sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+    border-right:1px solid var(--border);
+    padding: 28px 20px;
+    background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+  }
+
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom: 22px;
+  }
+  .brand-mark{
+    width:30px; height:30px;
+    border-radius:8px;
+    background: linear-gradient(135deg, var(--accent), var(--blue));
+    display:flex; align-items:center; justify-content:center;
+    font-family: var(--mono);
+    font-weight:700;
+    font-size:14px;
+    color:#04140F;
+    flex-shrink:0;
+  }
+  .brand-text{ font-family: var(--mono); font-size:13px; color: var(--text-dim); letter-spacing:.02em; }
+  .brand-text b{ color: var(--text); display:block; font-size:14.5px; }
+
+  .search-box{
+    position: relative;
+    margin-bottom: 20px;
+  }
+  .search-box input{
+    width:100%;
+    background: var(--surface-2);
+    border:1px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 12px 9px 32px;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 13.5px;
+    outline:none;
+    transition: border-color .15s;
+  }
+  .search-box input:focus{ border-color: var(--accent); }
+  .search-box svg{ position:absolute; left:10px; top:50%; transform:translateY(-50%); opacity:.5; }
+
+  .nav-group{ margin-bottom: 4px; }
+  .nav-link{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding: 7px 10px;
+    border-radius: 7px;
+    color: var(--text-dim);
+    font-size: 13px;
+    cursor:pointer;
+    transition: background .12s, color .12s;
+  }
+  .nav-link:hover{ background: var(--surface-2); color: var(--text); }
+  .nav-link.active{ background: var(--surface-2); color: var(--text); }
+  .dot{ width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+
+  .sidebar-foot{
+    margin-top: 22px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 11.5px;
+    color: var(--text-faint);
+    line-height:1.6;
+  }
+  .sidebar-foot a{ color: var(--text-dim); }
+
+  /* ---------- Main ---------- */
+  main{ padding: 56px 48px 120px; max-width: 900px; }
+  @media (max-width: 880px){ main{ padding: 36px 20px 100px; } }
+
+  .hero{ margin-bottom: 44px; }
+  .hero .eyebrow{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .hero .eyebrow::before{
+    content:''; width:16px; height:1px; background: var(--accent);
+  }
+  .hero h1{
+    font-size: clamp(30px, 5vw, 42px);
+    line-height:1.15;
+    margin: 0 0 14px;
+    letter-spacing: -0.02em;
+  }
+  .hero p{ color: var(--text-dim); font-size: 15.5px; max-width: 560px; margin:0 0 24px;}
+
+  .stat-row{ display:flex; gap: 28px; flex-wrap:wrap; }
+  .stat{ font-family: var(--mono); }
+  .stat b{ font-size: 22px; display:block; color: var(--text); }
+  .stat span{ font-size: 11.5px; color: var(--text-faint); text-transform:uppercase; letter-spacing:.05em; }
+
+  /* Who should use */
+  .audience{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+    gap: 12px;
+    margin: 28px 0 8px;
+  }
+  .audience-card{
+    background: var(--surface);
+    border:1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 16px;
+  }
+  .audience-card .ic{ font-size:18px; margin-bottom:8px; display:block; }
+  .audience-card h4{ margin:0 0 4px; font-size: 13.5px; }
+  .audience-card p{ margin:0; font-size: 12.5px; color: var(--text-dim); line-height:1.5; }
+
+  .callout{
+    background: var(--surface);
+    border:1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 14px 18px;
+    font-size: 13px;
+    color: var(--text-dim);
+    margin: 22px 0 0;
+  }
+  .callout b{ color: var(--text); }
+
+  /* ---------- Section ---------- */
+  .section{
+    margin-top: 64px;
+    scroll-margin-top: 30px;
+  }
+  .section-head{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom: 6px;
+  }
+  .section-icon{
+    width: 34px; height:34px;
+    border-radius: 9px;
+    display:flex; align-items:center; justify-content:center;
+    font-size: 16px;
+    flex-shrink:0;
+  }
+  .section-head h2{ font-size: 20px; margin:0; letter-spacing:-0.01em; }
+  .section-desc{ color: var(--text-dim); font-size: 13.5px; margin: 4px 0 20px 46px; max-width: 620px; }
+
+  .var-card{
+    background: var(--surface);
+    border:1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    margin-left: 46px;
+    transition: border-color .15s;
+  }
+  .var-card:hover{ border-color: var(--text-faint); }
+  @media (max-width: 640px){ .var-card, .section-desc{ margin-left:0; } }
+
+  .var-name{
+    font-family: var(--mono);
+    font-size: 13.5px;
+    color: var(--text);
+    font-weight: 600;
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .badge{
+    font-family: var(--sans);
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 20px;
+    font-weight: 600;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+  .badge.public{ background: rgba(126,200,255,.12); color: var(--blue); }
+  .badge.server{ background: rgba(255,143,163,.12); color: var(--rose); }
+
+  .var-row{ font-size: 12.8px; color: var(--text-dim); margin-top: 5px; display:flex; gap:6px; }
+  .var-row .k{ color: var(--text-faint); flex-shrink:0; min-width: 78px; }
+
+  .env-block{
+    margin-left: 46px;
+    background: #0D1219;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin-top: 14px;
+    position: relative;
+  }
+  @media (max-width: 640px){ .env-block{ margin-left:0; } }
+  .env-block pre{ margin:0; font-family: var(--mono); font-size: 12.5px; color: var(--accent); overflow-x:auto; line-height: 1.7; }
+  .env-block .comment{ color: var(--text-faint); }
+  .copy-btn{
+    position:absolute; top:10px; right:10px;
+    font-family: var(--sans);
+    font-size: 11px;
+    background: var(--surface-2);
+    border:1px solid var(--border);
+    color: var(--text-dim);
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor:pointer;
+    transition: all .12s;
+  }
+  .copy-btn:hover{ color: var(--text); border-color: var(--text-faint); }
+
+  /* ---------- Final .env.example ---------- */
+  .final-env{
+    margin-top: 70px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 26px 26px 20px;
+  }
+  .final-env-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom: 14px; flex-wrap:wrap; gap:10px;}
+  .final-env-head h3{ margin:0; font-size: 17px; font-family: var(--mono); }
+  .final-env-head p { margin: 4px 0 0; font-size:12.5px; color:var(--text-dim); }
+  .final-env pre{
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.75;
+    max-height: 420px;
+    overflow-y: auto;
+    color: var(--text-dim);
+    background: #0D1219;
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin:0;
+  }
+  .final-env pre .h{ color: var(--accent); }
+  .final-env pre .v{ color: var(--text); }
+  .big-copy{
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    background: var(--accent);
+    color: #04140F;
+    border: none;
+    padding: 9px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    display:flex; align-items:center; gap:7px;
+    transition: opacity .12s;
+  }
+  .big-copy:hover{ opacity:.85; }
+
+  footer{
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display:flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 12.5px;
+    color: var(--text-faint);
+  }
+
+  .hidden{ display:none !important; }
+
+  ::-webkit-scrollbar{ width:9px; height:9px; }
+  ::-webkit-scrollbar-track{ background: transparent; }
+  ::-webkit-scrollbar-thumb{ background: var(--border); border-radius: 8px; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">.env</div>
+      <div class="brand-text"><b>Env Guide</b>PortFolio.Env.Variables</div>
+    </div>
+
+    <div class="search-box">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="searchInput" type="text" placeholder="Filter variables…" oninput="filterVars(this.value)">
+    </div>
+
+    <nav id="navList"></nav>
+
+    <div class="sidebar-foot">
+      MIT Licensed · Built for developer portfolio projects.<br>
+      <a href="https://github.com/ProgrammerSiam/PortFolio.Env.Variables" target="_blank">View on GitHub ↗</a>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main>
+
+    <div class="hero">
+      <div class="eyebrow">Environment Reference</div>
+      <h1>Every env variable your<br>portfolio actually needs.</h1>
+      <p>A complete, plain-language reference for every environment variable used across this project — what it does, where it's used, and where to get the value. Copy what you need, skip what you don't.</p>
+
+      <div class="stat-row">
+        <div class="stat"><b id="statModules">0</b><span>Modules</span></div>
+        <div class="stat"><b id="statVars">0</b><span>Variables</span></div>
+        <div class="stat"><b>MIT</b><span>License</span></div>
+      </div>
+
+      <div class="audience">
+        <div class="audience-card"><span class="ic">🆕</span><h4>New to the project</h4><p>Understand each variable before copy-pasting <code>.env.example</code>.</p></div>
+        <div class="audience-card"><span class="ic">🛠️</span><h4>First local setup</h4><p>Know exactly which service to sign up for, and where to grab the key.</p></div>
+        <div class="audience-card"><span class="ic">🚀</span><h4>Deploying to prod</h4><p>Confirm nothing's missing before the build fails on your host.</p></div>
+        <div class="audience-card"><span class="ic">🤝</span><h4>Contributing a PR</h4><p>Follow the same documentation pattern for a new integration.</p></div>
+      </div>
+
+      <div class="callout"><b>No prior tool experience needed.</b> This guide is written for a beginner-to-intermediate Next.js developer — every entry explains <i>why</i> the variable exists in plain language, even if you've never touched the specific service before.</div>
+    </div>
+
+    <div id="sections"></div>
+
+    <div class="final-env" id="finalEnvBlock">
+      <div class="final-env-head">
+        <div>
+          <h3>.env.example</h3>
+          <p>Every variable above, in one file. Copy into <code>.env.local</code> and fill in the blanks.</p>
+        </div>
+        <button class="big-copy" onclick="copyFullEnv()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy all
+        </button>
+      </div>
+      <pre id="fullEnvPre"></pre>
+    </div>
+
+    <footer>
+      <span>PortFolio.Env.Variables — MIT License</span>
+      <span>© 2026 ProgrammerSiam</span>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+/* ---------------- DATA ---------------- */
+const DATA = [
+  { id:"github", title:"GitHub Integration", icon:"⚙️", color:"var(--blue)", desc:"Powers the contribution graph and authenticated GitHub API access.",
+    vars:[
+      {name:"GITHUB_API_TOKEN", type:"server", purpose:"Personal access token for GitHub API auth.", used:"Server-side API routes fetching GitHub data.", get:"GitHub → Settings → Developer settings → Tokens"},
+      {name:"GITHUB_CONTRIBUTIONS_API_URL", type:"server", purpose:"Third-party API (jogruber.de) that returns contribution graph data.", used:"Fetch call powering the contribution heatmap."}
+    ]},
+  { id:"dmca", title:"DMCA", icon:"🛡️", color:"var(--rose)", desc:"Displays a DMCA protection badge for your content.",
+    vars:[
+      {name:"NEXT_PUBLIC_DMCA_URL", type:"public", purpose:"URL for the DMCA protection badge/link.", used:"Footer component."}
+    ]},
+  { id:"posthog", title:"Analytics — PostHog", icon:"📊", color:"var(--violet)", desc:"Product analytics for tracking visitor behavior.",
+    vars:[
+      {name:"NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN", type:"public", purpose:"Identifies your PostHog project.", used:"Client-side SDK init."},
+      {name:"NEXT_PUBLIC_POSTHOG_HOST", type:"public", purpose:"Host URL — PostHog Cloud or self-hosted.", used:"Same SDK init."}
+    ]},
+  { id:"openpanel", title:"Analytics — OpenPanel", icon:"📈", color:"var(--violet)", desc:"Privacy-friendly analytics, client + server side.",
+    vars:[
+      {name:"NEXT_PUBLIC_OPENPANEL_CLIENT_ID", type:"public", purpose:"Client ID for browser-side tracking.", used:"OpenPanel provider on the frontend."},
+      {name:"OPENPANEL_PROJECT_ID", type:"server", purpose:"Identifies the project for server reporting.", used:"Backend API routes."},
+      {name:"OPENPANEL_CLIENT_ID", type:"server", purpose:"Server-side client ID for authenticated requests.", used:"Backend event-sending logic."},
+      {name:"OPENPANEL_CLIENT_SECRET", type:"server", purpose:"Secret authorizing server-side API access.", used:"Backend routes, never exposed to client."}
+    ]},
+  { id:"bot", title:"Bot Protection / Anti-Spam", icon:"🤖", color:"var(--rose)", desc:"reCAPTCHA and hCaptcha for blocking spam submissions.",
+    vars:[
+      {name:"RECAPTCHA_SECRET_KEY", type:"server", purpose:"Verifies reCAPTCHA tokens server-side.", used:"API route validating form submissions."},
+      {name:"NEXT_PUBLIC_RECAPTCHA_SITE_KEY", type:"public", purpose:"Renders the reCAPTCHA widget.", used:"Contact/comment forms."},
+      {name:"NEXT_PUBLIC_HCAPTCHA_SITE_KEY", type:"public", purpose:"Renders the hCaptcha widget (privacy-friendlier alternative).", used:"Forms using hCaptcha."},
+      {name:"HCAPTCHA_SECRET", type:"server", purpose:"Verifies hCaptcha responses server-side.", used:"API route validating hCaptcha."}
+    ]},
+  { id:"seo", title:"SEO / Site Verification", icon:"🔍", color:"var(--accent)", desc:"Search engine ownership verification and canonical URL.",
+    vars:[
+      {name:"NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION", type:"public", purpose:"Proves site ownership to Google.", used:"Meta tag in root layout.", get:"Google Search Console → Ownership verification"},
+      {name:"NEXT_PUBLIC_BING_SITE_VERIFICATION", type:"public", purpose:"Proves site ownership to Bing.", used:"Meta tag in root layout.", get:"Bing Webmaster Tools"},
+      {name:"NEXT_PUBLIC_SITE_URL", type:"public", purpose:"Canonical base URL of the deployed site.", used:"sitemap.ts, robots.ts, metadata generation."}
+    ]},
+  { id:"analytics2", title:"Additional Analytics", icon:"📉", color:"var(--violet)", desc:"Extra analytics providers — pick what you need.",
+    vars:[
+      {name:"NEXT_PUBLIC_GA_MEASUREMENT_ID", type:"public", purpose:"Google Analytics 4 measurement ID.", used:"GA script in root layout."},
+      {name:"NEXT_PUBLIC_UMAMI_WEBSITE_ID", type:"public", purpose:"Website ID for self-hosted Umami.", used:"Umami tracking script."},
+      {name:"NEXT_PUBLIC_VERCEL_ANALYTICS", type:"public", purpose:"Enables Vercel Analytics.", used:"@vercel/analytics component."}
+    ]},
+  { id:"og", title:"Social Share / Open Graph", icon:"🔗", color:"var(--blue)", desc:"Dynamic preview images and Twitter card metadata.",
+    vars:[
+      {name:"NEXT_PUBLIC_OG_IMAGE_API", type:"public", purpose:"Endpoint generating OG preview images per page.", used:"generateMetadata / opengraph-image."},
+      {name:"NEXT_PUBLIC_TWITTER_HANDLE", type:"public", purpose:"Your Twitter/X handle.", used:"twitter:site / twitter:creator meta tags."}
+    ]},
+  { id:"contact", title:"Contact Form / Email", icon:"✉️", color:"var(--amber)", desc:"Transactional email for the contact form.",
+    vars:[
+      {name:"RESEND_API_KEY", type:"server", purpose:"API key for Resend email delivery.", used:"Contact form API route.", get:"Resend dashboard → API Keys"},
+      {name:"EMAIL_TO", type:"server", purpose:"Address that receives submissions.", used:"Contact form API route."},
+      {name:"EMAIL_FROM", type:"server", purpose:"The \"From\" address shown to recipients.", used:"Resend send call."}
+    ]},
+  { id:"wakatime", title:"WakaTime", icon:"⏱️", color:"var(--amber)", desc:"Coding activity stats widget.",
+    vars:[
+      {name:"WAKATIME_API_KEY", type:"server", purpose:"Authorizes requests to pull coding stats.", used:"Server fetch feeding the stats widget.", get:"WakaTime → Settings → API Key"}
+    ]},
+  { id:"cms", title:"Blog / CMS", icon:"📝", color:"var(--blue)", desc:"Content management for the blog section.",
+    vars:[
+      {name:"CONTENTFUL_SPACE_ID", type:"server", purpose:"Identifies your Contentful space.", used:"CMS client init for blog pages."},
+      {name:"CONTENTFUL_ACCESS_TOKEN", type:"server", purpose:"Access token for reading CMS content.", used:"Same CMS client."}
+    ]},
+  { id:"guestbook", title:"Guestbook", icon:"💬", color:"var(--violet)", desc:"Stores visitor messages.",
+    vars:[
+      {name:"DATABASE_URL", type:"server", purpose:"Connection string to Postgres/Supabase.", used:"Guestbook API route + ORM client."}
+    ]},
+  { id:"newsletter", title:"Newsletter", icon:"📮", color:"var(--amber)", desc:"Resend Audiences — reuses the same email provider as Contact Form.",
+    vars:[
+      {name:"RESEND_AUDIENCE_ID", type:"server", purpose:"ID of the Resend Audience collecting signups.", used:"Newsletter signup API route.", get:"Resend dashboard → Audiences"}
+    ]},
+  { id:"security", title:"Security & Performance", icon:"🔒", color:"var(--rose)", desc:"Rate limiting, cron protection, ISR revalidation, image domains.",
+    vars:[
+      {name:"UPSTASH_REDIS_REST_URL", type:"server", purpose:"REST endpoint for Upstash Redis.", used:"Rate limiting contact + newsletter endpoints."},
+      {name:"UPSTASH_REDIS_REST_TOKEN", type:"server", purpose:"Auth token for Upstash REST API.", used:"Same rate-limiting logic."},
+      {name:"CRON_SECRET", type:"server", purpose:"Verifies scheduled/cron requests are legitimate.", used:"Cron API route (e.g. refreshing GitHub data)."},
+      {name:"REVALIDATE_SECRET", type:"server", purpose:"Authorizes manual ISR triggers.", used:"/api/revalidate, called by CMS webhook."},
+      {name:"NEXT_PUBLIC_IMAGE_DOMAINS", type:"public", purpose:"Allowed external domains for next/image.", used:"next.config.js → images.remotePatterns."}
+    ]},
+  { id:"gdpr", title:"Cookie Consent / GDPR", icon:"🍪", color:"var(--accent)", desc:"Consent banner required before loading analytics for EU visitors.",
+    vars:[
+      {name:"NEXT_PUBLIC_COOKIEYES_ID", type:"public", purpose:"ID for a cookie-consent provider (CookieYes/Cookiebot).", used:"Root layout, loaded before analytics scripts."}
+    ]},
+  { id:"maintenance", title:"Maintenance Mode", icon:"🚧", color:"var(--amber)", desc:"Site-wide maintenance toggle.",
+    vars:[
+      {name:"NEXT_PUBLIC_MAINTENANCE_MODE", type:"public", purpose:"Boolean flag toggling maintenance mode.", used:"Root layout / middleware."}
+    ]},
+  { id:"resume", title:"Resume / CV", icon:"📄", color:"var(--blue)", desc:"Powers the download-resume button.",
+    vars:[
+      {name:"NEXT_PUBLIC_RESUME_URL", type:"public", purpose:"Direct link to your resume file.", used:"Hero/About section download button."}
+    ]},
+  { id:"env", title:"Environment", icon:"🌐", color:"var(--text-dim)", desc:"Deployment environment identifier.",
+    vars:[
+      {name:"NEXT_PUBLIC_ENV", type:"public", purpose:"Identifies the current deployment environment.", used:"app/robots.ts to switch indexing rules."}
+    ]}
+];
+
+/* ---------------- RENDER ---------------- */
+const navList = document.getElementById('navList');
+const sectionsEl = document.getElementById('sections');
+let totalVars = 0;
+
+DATA.forEach(mod => {
+  totalVars += mod.vars.length;
+
+  // Nav link
+  const nav = document.createElement('div');
+  nav.className = 'nav-group';
+  nav.innerHTML = `<div class="nav-link" onclick="location.hash='${mod.id}'">
+      <span class="dot" style="background:${mod.color}"></span>${mod.title}
+    </div>`;
+  navList.appendChild(nav);
+
+  // Section
+  const sec = document.createElement('section');
+  sec.className = 'section';
+  sec.id = mod.id;
+
+  let varsHtml = mod.vars.map(v => `
+    <div class="var-card" data-name="${v.name.toLowerCase()}" data-title="${mod.title.toLowerCase()}">
+      <div class="var-name">
+        <span>${v.name}</span>
+        <span class="badge ${v.type}">${v.type === 'public' ? 'client' : 'server'}</span>
+      </div>
+      <div class="var-row"><span class="k">Purpose</span><span>${v.purpose}</span></div>
+      <div class="var-row"><span class="k">Used in</span><span>${v.used}</span></div>
+      ${v.get ? `<div class="var-row"><span class="k">Get it from</span><span>${v.get}</span></div>` : ''}
+    </div>
+  `).join('');
+
+  let envLines = mod.vars.map(v => `${v.name}=`).join('\n');
+
+  sec.innerHTML = `
+    <div class="section-head">
+      <div class="section-icon" style="background:${mod.color}22; color:${mod.color}">${mod.icon}</div>
+      <h2>${mod.title}</h2>
+    </div>
+    <div class="section-desc">${mod.desc}</div>
+    ${varsHtml}
+    <div class="env-block">
+      <button class="copy-btn" onclick="copyBlock(this)">Copy</button>
+      <pre>${envLines}</pre>
+    </div>
+  `;
+  sectionsEl.appendChild(sec);
+});
+
+document.getElementById('statModules').textContent = DATA.length;
+document.getElementById('statVars').textContent = totalVars;
+
+// Full env block
+const fullEnv = DATA.map(mod => {
+  const header = `# ${mod.title}`;
+  const lines = mod.vars.map(v => `${v.name}=`).join('\n');
+  return `${header}\n${lines}`;
+}).join('\n\n');
+document.getElementById('fullEnvPre').textContent = fullEnv;
+
+/* ---------------- INTERACTIONS ---------------- */
+function copyBlock(btn){
+  const text = btn.nextElementSibling.textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    const old = btn.textContent;
+    btn.textContent = 'Copied ✓';
+    setTimeout(()=> btn.textContent = old, 1400);
+  });
+}
+
+function copyFullEnv(){
+  navigator.clipboard.writeText(fullEnv).then(()=>{
+    const btn = document.querySelector('.big-copy');
+    const old = btn.innerHTML;
+    btn.innerHTML = 'Copied ✓';
+    setTimeout(()=> btn.innerHTML = old, 1600);
+  });
+}
+
+function filterVars(q){
+  q = q.toLowerCase().trim();
+  document.querySelectorAll('.var-card').forEach(card=>{
+    const match = !q || card.dataset.name.includes(q) || card.dataset.title.includes(q);
+    card.classList.toggle('hidden', !match);
+  });
+  document.querySelectorAll('.section').forEach(sec=>{
+    const visible = sec.querySelectorAll('.var-card:not(.hidden)').length;
+    sec.classList.toggle('hidden', q && visible === 0);
+  });
+}
+
+// Scroll-spy for nav
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('.nav-link');
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const idx = [...sections].indexOf(entry.target);
+      navLinks.forEach(l=>l.classList.remove('active'));
+      if(navLinks[idx]) navLinks[idx].classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s=>observer.observe(s));
+</script>
+
+</body>
+</html>
